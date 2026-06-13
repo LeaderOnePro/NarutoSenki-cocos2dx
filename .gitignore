@@ -1,0 +1,160 @@
+# Ignore thumbnails created by windows
+Thumbs.db
+
+# Ignore files build by Visual Studio
+*.obj
+*.exe
+*.pdb
+*.aps
+*.vcproj.*.user
+*.vcxproj.user
+*.vspscc
+*_i.c
+*.i
+*.icf
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+[Bb]in
+[Dd]ebug*/
+*.sbr
+*.sdf
+obj/
+[Rr]elease*/
+_ReSharper*/
+[Tt]est[Rr]esult*
+ipch/
+*.opensdf
+Generated Files
+AppPackages
+SubmissionInfo
+*.hps
+
+# Ignore files build by ndk and eclipse
+libs/
+bin/
+obj/
+gen/
+assets/
+local.properties
+
+# Ignore specific winrt files
+cocos2dx/platform/third_party/winrt/freetype/src
+cocos2dx/platform/third_party/winrt/libpng/lpng142
+cocos2dx/platform/third_party/winrt/libjpeg/jpeg-8b
+cocos2dx/platform/third_party/winrt/libtiff/tiff-4.0.1
+cocos2dx/platform/third_party/winrt/zlib/zlib-1.2.5
+cocos2dx/platform/third_party/wp8/freetype/src
+cocos2dx/platform/third_party/wp8/libpng/lpng142
+cocos2dx/platform/third_party/wp8/libjpeg/jpeg-8b
+cocos2dx/platform/third_party/wp8/libtiff/tiff-4.0.1
+cocos2dx/platform/third_party/wp8/zlib/zlib-1.2.5
+samples/Cpp/HelloCpp/proj.winrt/Assets/Resources/
+samples/Cpp/TestCpp/proj.winrt/Assets/Resources/
+samples/Cpp/HelloCpp/proj.wp8/Assets/Resources/
+samples/Cpp/TestCpp/proj.wp8/Assets/Resources/
+
+# Ignore files built by NaCl
+samples/Cpp/HelloCpp/proj.nacl/Resources/
+samples/Cpp/TestCpp/proj.nacl/Resources/
+samples/Cpp/TestCpp/proj.nacl/out/
+samples/Cpp/SimpleGame/proj.nacl/Resources/
+samples/Lua/HelloLua/proj.nacl/Resources/
+samples/Lua/TestLua/proj.nacl/Resources/
+
+# Ignore python compiled files
+*.pyc
+
+# Ignore files build by airplay and marmalade
+build_*_xcode/
+build_*_vc10/
+
+# Ignore files build by xcode
+*.mode*v*
+*.pbxuser
+*.xcbkptlist
+*.xcworkspacedata
+*.xcuserstate
+xcschememanagement.plist
+build/
+.DS_Store
+._.*
+xcuserdata/
+DerivedData/
+*.xccheckout
+
+# Ignore files built by bada
+.Simulator-Debug/
+.Target-Debug/
+.Target-Release/
+
+# Ignore files built by blackberry
+Simulator/
+Device-Debug/
+Device-Release/
+
+# Ignore vim swaps
+*.swp
+
+# Ignore config files in javascript bindings generator
+tools/tojs/user.cfg
+# ... userconf.ini generated if running from tools/tojs
+tools/tojs/userconf.ini
+# ... userconf.ini generated if running from tools/jenkins_scripts/mac/android/
+tools/jenkins_scripts/mac/android/userconf.ini
+
+# CTags
+tags
+# ============================================================
+#  预编译依赖:原版 .gitignore 在此忽略了这些目录(因为官方让开发者
+#  另行下载),但其中有 win32 构建必需的库。若照搬会导致 clone 后编不出。
+#  策略:保留 win32 必需的,忽略其他平台/脚本引擎等用不到的大块。
+# ============================================================
+
+# third_party 按平台拆分:只保留 win32(6.4M,含 glew/curl/pthread/png/jpeg
+# /tiff/webp/zlib/iconv 等库),忽略其余平台(~198M:winrt/android/wp8/ios/…)
+/cocos2dx/platform/third_party/*
+!/cocos2dx/platform/third_party/win32/
+
+# 以下为 win32 构建必需,保留跟踪(故意不再忽略):
+#   /external/libwebsockets/   → websockets.lib
+#   /external/sqlite3/
+#   /CocosDenshion/third_party/
+
+# 以下平台/脚本引擎本项目用不到,继续忽略以减小体积:
+/external/emscripten/
+/scripting/javascript/spidermonkey-android/
+/scripting/javascript/spidermonkey-ios/
+/scripting/javascript/spidermonkey-win32/
+/scripting/lua/luajit/
+/tools/tojs/win32/
+/tools/tolua++/tolua++.Mac.zip
+/tools/tolua++/tolua++.rar
+/v*-deps-*.zip
+/external/version.json
+
+# ============================================================
+#  本项目(monorepo 化)新增的忽略规则  —  2026-06-13
+# ============================================================
+
+# Visual Studio 新版缓存目录(IntelliSense PCH 缓存,可达数百 MB)
+.vs/
+
+# 额外的编译中间产物(原版未覆盖)
+*.cod
+*.idb
+*.exp
+*.pch
+
+# 迁移前的原始备份:留在本地,不进版本控制(用户决定)
+projects/NarutoSenki - 副本/
+
+# 游戏资源的冗余拷贝:实际运行用的是 projects/NarutoSenki/Resources,
+# proj.win32/Resources 是重复副本,不跟踪
+projects/NarutoSenki/proj.win32/Resources/
