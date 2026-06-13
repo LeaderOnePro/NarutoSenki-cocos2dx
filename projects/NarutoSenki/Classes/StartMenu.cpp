@@ -479,9 +479,7 @@ bool StartMenu::init()
 	
 
 
-		if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID){
-			this->setKeypadEnabled(true);
-		}
+		this->setKeypadEnabled(true); // was Android-only; enabled on all platforms
 
 		this->scheduleUpdate();
 		
@@ -3392,6 +3390,23 @@ void StartMenu::onTrainingCallBack(){
 
 	SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
 	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Select.plist");	
+
+	// === restore character select (original flow): Training -> SelectLayer ===
+	// Test build hard-coded Tsunade and skipped select; go to SelectLayer instead.
+	// Old hard-coded logic below stays but is unreachable (after return), kept for reference.
+	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("UI.plist");
+	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Report.plist");
+	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Ougis.plist");
+	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Ougis2.plist");
+	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Map.plist");
+	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Gears.plist");
+	{
+		CCScene* selectScene = CCScene::create();
+		SelectLayer* selectLayer = SelectLayer::create();
+		selectScene->addChild(selectLayer);
+		CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(1.5f, selectScene));
+		return;
+	}
 
 
 	int i=1;

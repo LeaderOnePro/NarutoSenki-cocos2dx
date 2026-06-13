@@ -2584,13 +2584,13 @@
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>Record2.pvr.ccz</string>
+            <string>Record2.png</string>
             <key>size</key>
             <string>{1024,2048}</string>
             <key>smartupdate</key>
             <string>$TexturePacker:SmartUpdate:40fa2c17d017fda38f30deb0c9d4baac$</string>
             <key>textureFileName</key>
-            <string>Record2.pvr.ccz</string>
+            <string>Record2.png</string>
         </dict>
     </dict>
 </plist>

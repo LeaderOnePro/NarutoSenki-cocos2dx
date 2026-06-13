@@ -79,9 +79,7 @@ bool CreditsLayer::init(){
 		SimpleAudioEngine::sharedEngine()->playBackgroundMusic("Audio/Music/credits_music.mp3",true);
 		}
 		
-		if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID){
-		this->setKeypadEnabled(true);
-		}
+		this->setKeypadEnabled(true); // was Android-only; enabled on all platforms for PC ESC/F1 back
 
 
 		bRet=true;
@@ -95,9 +93,7 @@ void CreditsLayer::keyBackClicked(){
 
 	SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
 	SimpleAudioEngine::sharedEngine()->playEffect("Audio/Menu/cancel.ogg");
-	if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID){
-		this->setKeypadEnabled(false);
-	}
+	this->setKeypadEnabled(false); // disable keypad when leaving Credits (all platforms)
 	CCScene* menuScene =CCScene::create();
 	CCLayer* menuLayer=StartMenu::create();
 	menuScene->addChild(menuLayer);

@@ -12,7 +12,7 @@ SelectLayer::SelectLayer(void)
 	_selectImg=NULL;
 	
 	isStart=false;
-	_isHardCoreMode=false;
+	_isHardCoreMode=CCUserDefault::sharedUserDefault()->getBoolForKey("isHardCore"); // follow HardCore unlock flag (unlocked by default)
 
 	SaveError=false;
 	_playerSelect=NULL;
@@ -119,11 +119,12 @@ bool SelectLayer::init(){
 		this->addChild(menu_bar_t,2);
 
 		
+		if(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("select_title.png")){ // title frame is missing in this build's resources; skip if absent to avoid crash
 		CCSprite* select_title=CCSprite::createWithSpriteFrameName("select_title.png");
-		
 		select_title->setAnchorPoint(ccp(0,0));
 		select_title->setPosition(ccp(2,winSize.height-select_title->getContentSize().height-2));
 		this->addChild(select_title,3);
+		}
 
 		
 
@@ -211,9 +212,7 @@ bool SelectLayer::init(){
 			SimpleAudioEngine::sharedEngine()->playBackgroundMusic("Audio/Music/select_music.mp3",true);
 			}
 
-			if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID){
-				this->setKeypadEnabled(true);
-			}
+			this->setKeypadEnabled(true); // was Android-only; enabled on all platforms for PC ESC/F1 back
 			
 			
 		}
