@@ -177,6 +177,7 @@ void LoadLayer::preloadIMG(){
 			CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Element/DevaPath/DevaPath.plist");
 			CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Element/AsuraPath/AsuraPath.plist");
 			CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Element/AnimalPath/AnimalPath.plist");
+			CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Element/Nagato/Nagato.plist");
 		}else if(strcmp(player->getCString(),"Sasuke")==0){
 			CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Element/ImmortalSasuke/ImmortalSasuke.plist");
 			tool->prepareFileOGG("ImmortalSasuke");
