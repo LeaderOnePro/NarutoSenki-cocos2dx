@@ -44,6 +44,7 @@ void CCLog(const char * pszFormat, ...)
 
     WideCharToMultiByte(CP_ACP, 0, wszBuf, sizeof(wszBuf), szBuf, sizeof(szBuf), NULL, FALSE);
     printf("%s\n", szBuf);
+    fflush(stdout);
 }
 
 void CCMessageBox(const char * pszMsg, const char * pszTitle)

@@ -4,7 +4,7 @@ using namespace CocosDenshion;
 USING_NS_CC;
 
 
-int adResult=0;
+int adResult=1; // default to "ad watched/success" (ads no longer load); unlocks ad-gated content
 
 
 GameScene::GameScene(void)

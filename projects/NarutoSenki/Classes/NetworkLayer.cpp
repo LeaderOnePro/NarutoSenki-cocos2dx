@@ -410,9 +410,7 @@ bool NetworkLayer::init(){
 			SimpleAudioEngine::sharedEngine()->playBackgroundMusic("Audio/Music/select_music.mp3",true);
 			}
 
-			if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID){
-				this->setKeypadEnabled(true);
-			}
+			this->setKeypadEnabled(true); // was Android-only; enabled on all platforms for PC ESC/F1 back
 
 			
 		}

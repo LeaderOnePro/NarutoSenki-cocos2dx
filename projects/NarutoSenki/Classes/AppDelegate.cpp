@@ -23,12 +23,17 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	
     pDirector->setOpenGLView(pEGLView);
 	pEGLView->setDesignResolutionSize(480,320,kResolutionFixedHeight);
+	pEGLView->setFrameZoomFactor(2.0f); // enlarge win32 window to 960x640 (2x); game logic stays at 480x320 design res
 
     // turn on display FPS
     pDirector->setDisplayStats(false);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
+
+    // unlock HardCore mode by default (original needed manual unlock; ad/unlock flow is dead)
+    CCUserDefault::sharedUserDefault()->setBoolForKey("isHardCore", true);
+    CCUserDefault::sharedUserDefault()->flush();
 
     // create a scene. it's an autorelease object
     CCScene *pScene = GameScene::create();

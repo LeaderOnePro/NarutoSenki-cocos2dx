@@ -1752,13 +1752,13 @@
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>Select.pvr.ccz</string>
+            <string>Select.png</string>
             <key>size</key>
             <string>{1024,2048}</string>
             <key>smartupdate</key>
             <string>$TexturePacker:SmartUpdate:6c5051d424fdaed8f3fb6046deed821f$</string>
             <key>textureFileName</key>
-            <string>Select.pvr.ccz</string>
+            <string>Select.png</string>
         </dict>
     </dict>
 </plist>
