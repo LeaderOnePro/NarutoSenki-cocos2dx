@@ -2,6 +2,11 @@
 using namespace CocosDenshion;
 USING_NS_CC_EXT;
 
+#if CC_TARGET_PLATFORM==CC_PLATFORM_WIN32
+#include <windows.h>
+#include <shellapi.h>
+#endif
+
 
 int Cheats=0;
 int MemberID=NULL;
@@ -3241,6 +3246,11 @@ void  StartMenu::onInputBoxClose(CCObject* sender){
 
 
 void  StartMenu::onNewsBtn(CCObject* sender){
+
+#if CC_TARGET_PLATFORM==CC_PLATFORM_WIN32
+	SimpleAudioEngine::sharedEngine()->playEffect("Audio/Menu/confirm.ogg");
+	ShellExecuteA(NULL, "open", "https://github.com/LeaderOnePro/NarutoSenki", NULL, NULL, SW_SHOWNORMAL);
+#endif
 
 #if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
 
