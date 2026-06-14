@@ -179,13 +179,13 @@
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>FemalePainFlog.pvr.ccz</string>
+            <string>FemalePainFlog.png</string>
             <key>size</key>
             <string>{256,256}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:fcc5f705795ff4a56e0a12b65059b300$</string>
+            <string>$TexturePacker:SmartUpdate:1b4acdd616aa927062f84e370c740cc7$</string>
             <key>textureFileName</key>
-            <string>FemalePainFlog.pvr.ccz</string>
+            <string>FemalePainFlog.png</string>
         </dict>
     </dict>
 </plist>
