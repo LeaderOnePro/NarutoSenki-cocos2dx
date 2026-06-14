@@ -132,12 +132,24 @@ bool SelectLayer::init(){
 			int first_player=NULL;
 			selectArray=CCArray::create();
 			
-			char* selectList[]={"Naruto","Sakura","Sai",
-				"Itachi","Konan","Deidara",
-				"Sasuke","Karin","Jugo"
+			char* selectList[]={"Naruto","Sakura","Sai","Kakashi","None","None","None",
+				"Shikamaru","Ino","Choji","Asuma","Kiba","Hinata","Shino",
+				"Neji","Tenten","Lee","None","None","None","None",
+				"None","Tobirama","Hiruzen","Minato","Jiraiya","Tsunade","Orochimaru",
+				"None","Deidara","Kakuzu","Hidan","Tobi","Konan","Pain",
+				"Itachi","Kisame","None","None","None","None","None",
+				"Sasuke","Karin","Suigetsu","Jugo","None","None","None",
+				"Gaara","None","Kankuro","Chiyo","None","None","None",
+				"None","None","None","None","None","None","None"
 			};
 
 			int num= sizeof(selectList)/sizeof(char*);
+			_pageLayer1=CCLayer::create();
+			_pageLayer2=CCLayer::create();
+			_pageLayer3=CCLayer::create();
+			this->addChild(_pageLayer1,2);
+			this->addChild(_pageLayer2,2);
+			this->addChild(_pageLayer3,2);
 			for(int i=0;i<num;i++){
 				CCString* path;
 				const char* charName;
@@ -148,20 +160,30 @@ bool SelectLayer::init(){
 				SelectButton* select_btn=SelectButton::create(path->getCString());
 				select_btn->setDelegate1(this);
 
-				if(i<=2){
-					select_btn->setPosition(ccp(winSize.width/2-64+i*27+(i%3)*10,winSize.height-112));
-				}else if (i<=5){
-					select_btn->setPosition(ccp(winSize.width/2-64+(i%3)*27+i%3*10,winSize.height-184));
-				}else if (i<=8){
-					select_btn->setPosition(ccp(winSize.width/2-64+(i%3)*27+i%3*10,winSize.height-256));
-				
-				} 
 				select_btn->setCharName(CCString::createWithFormat("%s",charName));
-				this->addChild(select_btn,2);
+				int Column=i%7;
+				int Page=i/21;
+				int Row=(i/7)-Page*3;
+				select_btn->setPosition(ccp(winSize.width/2-36+(Column-1)*27+Column/4*10,winSize.height-112-(72*Row)));
+				if(Page==0){
+					_pageLayer1->addChild(select_btn,-Column);
+				}else if(Page==1){
+					_pageLayer2->addChild(select_btn,-Column);
+				}else{
+					_pageLayer3->addChild(select_btn,-Column);
+				}
 				selectArray->addObject(select_btn);
 
 			};
 			selectArray->retain();
+			_pageBtn1=CCMenuItemSprite::create(CCSprite::createWithSpriteFrameName("page1_off.png"),CCSprite::createWithSpriteFrameName("page1_on.png"),this,menu_selector(SelectLayer::onPage1));
+			_pageBtn2=CCMenuItemSprite::create(CCSprite::createWithSpriteFrameName("page2_off.png"),CCSprite::createWithSpriteFrameName("page2_on.png"),this,menu_selector(SelectLayer::onPage2));
+			_pageBtn3=CCMenuItemSprite::create(CCSprite::createWithSpriteFrameName("page3_off.png"),CCSprite::createWithSpriteFrameName("page3_on.png"),this,menu_selector(SelectLayer::onPage3));
+			CCMenu* page_menu=CCMenu::create(_pageBtn1,_pageBtn2,_pageBtn3,NULL);
+			page_menu->alignItemsHorizontallyWithPadding(20);
+			page_menu->setPosition(ccp(winSize.width/2+48,42));
+			this->addChild(page_menu,10);
+			showPage(1);
 		
 			
 			first_player=0;
@@ -184,7 +206,7 @@ bool SelectLayer::init(){
 			_selectImg->setAnchorPoint(ccp(0,0));
 			SelectButton* pObject=(SelectButton*) selectArray->objectAtIndex(first_player);
 			_selectImg->setPosition(ccp(pObject->getPositionX()-2,pObject->getPositionY()-2));
-			this->addChild(_selectImg,500);
+			_pageLayer1->addChild(_selectImg,500);
 
 			_selectHero=pObject->getCharName()->getCString();
 
@@ -228,6 +250,8 @@ bool SelectLayer::init(){
 void SelectLayer::setSelected(CCObject* sender){
 	SelectButton* btn=(SelectButton*) sender;
 
+	 _selectImg->removeFromParentAndCleanup(false);
+	 btn->getParent()->addChild(_selectImg,500);
 	 _selectImg->setPosition(ccp(btn->getPositionX()-2,btn->getPositionY()-2));
 	
 	 _heroHalf->removeFromParent();
@@ -261,6 +285,8 @@ void SelectLayer::onError(CCObject* sender){
 
 void SelectLayer::onSkillMenu(CCObject* sender){
 
+	if(strcmp(_selectHero,"Pain")==0 || strcmp(_selectHero,"Orochimaru")==0){ return; }
+
 	CCScene* pscene =CCScene::create();
 	SkillLayer* skillLayer=SkillLayer::create();
 	skillLayer->setDelegate(this);
@@ -278,6 +304,12 @@ void SelectLayer::onGameStart(CCObject* sender){
 	
 
 	if (!isStart){
+
+		if(strcmp(_selectHero,"Pain")==0 || strcmp(_selectHero,"Orochimaru")==0){
+			CCTips *tip=CCTips::create("LimitedChar");
+			this->addChild(tip,5000);
+			return;
+		}
 
 		KTools* tool= KTools::create();
 
@@ -331,9 +363,7 @@ void SelectLayer::onGameStart(CCObject* sender){
 				continue;
 			}		
 			CCString* hero=CCString::create(heroList[i]);
-			if(num2<=2*3+3){
-				realHero->addObject(hero);
-			}
+			realHero->addObject(hero);
 		
 		}
 
@@ -419,6 +449,18 @@ void SelectLayer::keyBackClicked(){
 	CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(1.5f,menuScene));
 
 }
+
+void SelectLayer::showPage(int p){
+	_pageLayer1->setVisible(p==1); _pageLayer1->setPositionY(p==1?0:2000);
+	_pageLayer2->setVisible(p==2); _pageLayer2->setPositionY(p==2?0:2000);
+	_pageLayer3->setVisible(p==3); _pageLayer3->setPositionY(p==3?0:2000);
+	_pageBtn1->setNormalImage(CCSprite::createWithSpriteFrameName(p==1?"page1_on.png":"page1_off.png"));
+	_pageBtn2->setNormalImage(CCSprite::createWithSpriteFrameName(p==2?"page2_on.png":"page2_off.png"));
+	_pageBtn3->setNormalImage(CCSprite::createWithSpriteFrameName(p==3?"page3_on.png":"page3_off.png"));
+}
+void SelectLayer::onPage1(CCObject* sender){ showPage(1); }
+void SelectLayer::onPage2(CCObject* sender){ showPage(2); }
+void SelectLayer::onPage3(CCObject* sender){ showPage(3); }
 
 
 SelectLayer* SelectLayer::create(){

@@ -23,6 +23,12 @@ public:
 	
 	
 	CCArray* selectArray;
+	CCLayer* _pageLayer1;
+	CCLayer* _pageLayer2;
+	CCLayer* _pageLayer3;
+	CCMenuItemSprite* _pageBtn1;
+	CCMenuItemSprite* _pageBtn2;
+	CCMenuItemSprite* _pageBtn3;
 
 	bool isStart;
 	bool SaveError;
@@ -39,6 +45,10 @@ private:
 	void    onSkillMenu(CCObject* sender);
 	void	onError(CCObject* sender);
 	void	onBackToMenu(CCObject* sender);
+	void	onPage1(CCObject* sender);
+	void	onPage2(CCObject* sender);
+	void	onPage3(CCObject* sender);
+	void	showPage(int p);
 };
 
 
