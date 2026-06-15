@@ -10,6 +10,7 @@ SelectLayer::SelectLayer(void)
 	_heroHalf=NULL;
 	_heroName=NULL;
 	_selectImg=NULL;
+	_selectHero=NULL;
 	
 	isStart=false;
 	_isHardCoreMode=CCUserDefault::sharedUserDefault()->getBoolForKey("isHardCore"); // follow HardCore unlock flag (unlocked by default)
@@ -250,8 +251,10 @@ bool SelectLayer::init(){
 void SelectLayer::setSelected(CCObject* sender){
 	SelectButton* btn=(SelectButton*) sender;
 
+	 _selectImg->retain();
 	 _selectImg->removeFromParentAndCleanup(false);
 	 btn->getParent()->addChild(_selectImg,500);
+	 _selectImg->release();
 	 _selectImg->setPosition(ccp(btn->getPositionX()-2,btn->getPositionY()-2));
 	
 	 _heroHalf->removeFromParent();
@@ -285,7 +288,11 @@ void SelectLayer::onError(CCObject* sender){
 
 void SelectLayer::onSkillMenu(CCObject* sender){
 
-	if(strcmp(_selectHero,"Pain")==0 || strcmp(_selectHero,"Orochimaru")==0){ return; }
+	if(strcmp(_selectHero,"Pain")==0 || strcmp(_selectHero,"Orochimaru")==0){
+		CCTips *tip=CCTips::create("LimitedChar");
+		this->addChild(tip,5000);
+		return;
+	}
 
 	CCScene* pscene =CCScene::create();
 	SkillLayer* skillLayer=SkillLayer::create();
