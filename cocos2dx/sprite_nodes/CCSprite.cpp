@@ -120,13 +120,19 @@ CCSprite* CCSprite::createWithSpriteFrame(CCSpriteFrame *pSpriteFrame)
 
 CCSprite* CCSprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
 {
+    if (pszSpriteFrameName == NULL)
+    {
+        CCLOG("cocos2d: WARNING: createWithSpriteFrameName called with NULL name (using empty sprite)");
+        return CCSprite::create();
+    }
+
     CCSpriteFrame *pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
-    
-    // win32 fix: match Android Release behavior (asserts compiled out). Some
-    // frames are intentionally absent (e.g. per-character buff icons like
-    // "<Name>_cBuff.png" that were never authored). A Debug build would assert
-    // and crash here; instead log a warning and return an empty (invisible)
-    // sprite so even callers that don't null-check stay safe.
+
+    // Missing sprite frames are treated as non-fatal in Debug, aligning with
+    // Release tolerance (CCAssert is compiled out there). Some frames are
+    // intentionally absent (e.g. per-character buff icons "<Name>_cBuff.png"
+    // that were never authored). Return an empty (invisible) sprite so even
+    // callers that don't null-check the result stay safe.
     if (pFrame == NULL)
     {
         CCLOG("cocos2d: WARNING: Invalid spriteFrameName: %s (using empty sprite)", pszSpriteFrameName);

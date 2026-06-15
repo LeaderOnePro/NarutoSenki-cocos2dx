@@ -3894,7 +3894,7 @@ void StartMenu::keyBackClicked(){
 void StartMenu::onExitCallBack(){
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 	this->keyBackClicked();
-#else
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	CCDirector::sharedDirector()->end(); // PC: quit the game (Android keeps the exit dialog)
 #endif
 }

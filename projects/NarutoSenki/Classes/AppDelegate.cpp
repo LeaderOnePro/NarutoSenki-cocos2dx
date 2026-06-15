@@ -23,7 +23,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	
     pDirector->setOpenGLView(pEGLView);
 	pEGLView->setDesignResolutionSize(480,320,kResolutionFixedHeight);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	pEGLView->setFrameZoomFactor(2.0f); // enlarge win32 window to 960x640 (2x); game logic stays at 480x320 design res
+#endif
 
     // turn on display FPS
     pDirector->setDisplayStats(false);
