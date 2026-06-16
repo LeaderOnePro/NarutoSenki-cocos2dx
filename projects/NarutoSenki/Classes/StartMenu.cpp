@@ -3401,7 +3401,7 @@ void StartMenu::onTrainingCallBack(){
 	SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
 	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Select.plist");	
 
-	// === restore character select (original flow): Training -> SelectLayer ===
+	// === Training -> bond mode: NetworkLayer (multi-character team select, offline) ===
 	// Test build hard-coded Tsunade and skipped select; go to SelectLayer instead.
 	// Old hard-coded logic below stays but is unreachable (after return), kept for reference.
 	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("UI.plist");
@@ -3412,7 +3412,7 @@ void StartMenu::onTrainingCallBack(){
 	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Gears.plist");
 	{
 		CCScene* selectScene = CCScene::create();
-		SelectLayer* selectLayer = SelectLayer::create();
+		NetworkLayer* selectLayer = NetworkLayer::create();
 		selectScene->addChild(selectLayer);
 		CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(1.5f, selectScene));
 		return;
