@@ -124,38 +124,39 @@ PLATFORM=emscripten make all
 - **tools/tojs/**: JavaScript 绑定生成
 - **tools/project-creator/**: 新项目创建脚本
 
-## VS2022 现代化迁移
+## Visual Studio 现代化迁移 (VS2026)
 
 ### 迁移状态
-项目已从 VS2010 迁移到 VS2022：
-- ToolsVersion 升级到 17.0
-- PlatformToolset 升级到 v143 
-- WindowsTargetPlatformVersion 设置为 10.0
+项目已从 VS2010 迁移到现代 Visual Studio 开发环境：
+- ToolsVersion 升级到 17.0/Current
+- PlatformToolset 升级到 `v145` (VS2026)
+- WindowsTargetPlatformVersion 设置为 10.0 (自动使用系统已安装的最新 Win10/11 SDK)
 - 添加现代 C++ 标准支持 (stdcpp14)
+- 所有 `.vcxproj` 项目文件已被全局升级，可以直接在 VS2026 中打开并编译
 
-### 测试编译
+### 编译命令
+
+#### 使用 Visual Studio (推荐)
+1. 双击打开 `projects/NarutoSenki/proj.win32/NarutoSenki.sln`。
+2. 菜单栏选择：**生成 (Build)** -> **生成解决方案 (Build Solution)** (快捷键 `Ctrl+Shift+B`)。
+
+#### 使用命令行 (MSBuild)
 ```bash
-# 运行自动化编译测试（增强版，适配您的VS2022 Professional路径）
-test_build_vs2022_enhanced.bat
+# 编译整个解决方案 (在包含 sln 的目录下)
+msbuild cocos2d-win32.vc2012.sln /p:Configuration="Debug" /p:Platform="Win32" /m
 
-# 或运行基础版本
-test_build_vs2022.bat
-
-# 手动编译框架
-msbuild cocos2d-win32.vc2012.sln /p:Configuration="Debug" /m
-
-# 编译游戏项目  
-cd projects\NarutoSenki\proj.win32
-msbuild NarutoSenki.sln /p:Configuration="Debug" /m
+# 编译游戏项目 (在 projects\NarutoSenki\proj.win32 目录下)
+msbuild NarutoSenki.sln /p:Configuration="Debug" /p:Platform="Win32" /m
 ```
 
 ### 游戏项目
 - **projects/NarutoSenki/**: 火影战记游戏项目
   - 基于 cocos2d-x 2.2.2，使用 2.2.6 框架
   - 完整的游戏逻辑、音效、图片资源
-  - 已迁移到 VS2022 兼容配置
+  - 已迁移至 VS2026 (v145) 兼容配置
 
-### 常见问题
+### 常见问题与文档
+- 参考 `projects/NarutoSenki/项目现状.md` 了解项目状态与测试态修复详情
 - 参考 `projects/编译错误解决方案.md` 解决编译问题
 - 参考 `projects/迁移指南.md` 了解迁移详情
 - sprintf/strcpy 等函数已添加安全版本支持
