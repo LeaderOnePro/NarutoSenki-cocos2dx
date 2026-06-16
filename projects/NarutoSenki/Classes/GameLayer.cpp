@@ -555,7 +555,7 @@ void GameLayer::onGameStart(float dt){
 	CCARRAY_FOREACH(this->_CharacterArray,pObject){
 		ActionManager* tempChar=(ActionManager*) pObject;
 		if(strcmp(tempChar->getRole()->getCString(),"Com")==0){
-		//tempChar->doAI();
+		tempChar->doAI();
 		}
 		
 	}
