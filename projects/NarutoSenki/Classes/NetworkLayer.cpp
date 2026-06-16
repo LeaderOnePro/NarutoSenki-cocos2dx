@@ -809,10 +809,7 @@ void NetworkLayer::onError(CCObject* sender){
 
 
 void NetworkLayer::onSkillMenu(CCObject* sender){
-	if(strcmp(_selectHero,"Pain")==0 || strcmp(_selectHero,"Orochimaru")==0 ){
-		return;
-
-	}
+	
 
 	CCScene* pscene =CCScene::create();
 	SkillLayer* skillLayer=SkillLayer::create();

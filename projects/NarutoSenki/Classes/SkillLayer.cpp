@@ -116,15 +116,7 @@ void SelectButton::click(){
 						this->getParent()->reorderChild(this,500);
 					}
 
-					if(strcmp(_charName->getCString(),"Pain")==0 ||strcmp(_charName->getCString(),"Orochimaru")==0
-						){
-							CCTips *tip=CCTips::create("LimitedChar");
-							this->_delegate2->addChild(tip,5000);
-							
-					}else{
-						this->_clickTime++;
-						
-					}
+					this->_clickTime++;
 
 					_delegate2->setSelected(this);
 				}
