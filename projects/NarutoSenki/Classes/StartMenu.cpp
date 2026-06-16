@@ -3401,15 +3401,10 @@ void StartMenu::onTrainingCallBack(){
 	SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
 	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Select.plist");	
 
-	// === Training -> bond mode: NetworkLayer (multi-character team select, offline) ===
-	// Test build hard-coded Tsunade and skipped select; go to SelectLayer instead.
-	// Old hard-coded logic below stays but is unreachable (after return), kept for reference.
-	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("UI.plist");
-	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Report.plist");
-	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Ougis.plist");
-	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Ougis2.plist");
-	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Map.plist");
-	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Gears.plist");
+	// === Training -> bond mode (NetworkLayer: multi-character team select, offline) ===
+	// Both NetworkLayer::init and SelectLayer::init load their own atlases
+	// (Record/UI/Report/Ougis/Map/Gears); only Select.plist (loaded above) must
+	// come from the caller. Old hard-coded Tsunade logic below stays unreachable.
 	{
 		CCScene* selectScene = CCScene::create();
 		NetworkLayer* selectLayer = NetworkLayer::create();
