@@ -102,7 +102,7 @@
 		<link>
 			<name>Classes</name>
 			<type>2</type>
-			<locationURI>COCOS2DX/projects/HelloJavascript/Classes</locationURI>
+			<location>COCOS2DX/projects/HelloJavascript/Classes</location>
 		</link>
 		<link>
 			<name>cocos2dx</name>
@@ -112,7 +112,7 @@
 		<link>
 			<name>extensions</name>
 			<type>2</type>
-			<locationURI>COCOS2DX/extensions</locationURI>
+			<location>COCOS2DX/extensions</location>
 		</link>
 		<link>
 			<name>scripting</name>
@@ -120,15 +120,4 @@
 			<locationURI>COCOS2DX/scripting</locationURI>
 		</link>
 	</linkedResources>
-	<filteredResources>
-		<filter>
-			<id>1724980271195</id>
-			<name></name>
-			<type>30</type>
-			<matcher>
-				<id>org.eclipse.core.resources.regexFilterMatcher</id>
-				<arguments>node_modules|\.git|__CREATED_BY_JAVA_LANGUAGE_SERVER__</arguments>
-			</matcher>
-		</filter>
-	</filteredResources>
 </projectDescription>
