@@ -117,17 +117,18 @@ tags
 #  策略:保留 win32 必需的,忽略其他平台/脚本引擎等用不到的大块。
 # ============================================================
 
-# third_party 按平台拆分:只保留 win32(6.4M,含 glew/curl/pthread/png/jpeg
-# /tiff/webp/zlib/iconv 等库),忽略其余平台(~198M:winrt/android/wp8/ios/…)
-/cocos2dx/platform/third_party/*
-!/cocos2dx/platform/third_party/win32/
+# third_party:保留【全部原生平台】预编译库(android/ios/mac/linux/winrt/
+# wp8/tizen/marmalade/blackberry/win32),仅忽略 emscripten(Web,纯 C++ 游戏用不到)。
+# 2026-06-22:从原版 cocos2d-x 2.2.6 补回被删减的原生平台库,改为保留完整框架。
+/cocos2dx/platform/third_party/emscripten/
 
-# 以下为 win32 构建必需,保留跟踪(故意不再忽略):
+# 以下为构建必需/完整框架的一部分,保留跟踪:
 #   /external/libwebsockets/   → websockets.lib
 #   /external/sqlite3/
 #   /CocosDenshion/third_party/
+#   /external/version.json     → 框架版本标记(已放行)
 
-# 以下平台/脚本引擎本项目用不到,继续忽略以减小体积:
+# 以下脚本/Web 引擎本项目(纯 C++)用不到,继续忽略以减小体积:
 /external/emscripten/
 /scripting/javascript/spidermonkey-android/
 /scripting/javascript/spidermonkey-ios/
@@ -137,7 +138,6 @@ tags
 /tools/tolua++/tolua++.Mac.zip
 /tools/tolua++/tolua++.rar
 /v*-deps-*.zip
-/external/version.json
 
 # ============================================================
 #  本项目(monorepo 化)新增的忽略规则  —  2026-06-13
@@ -151,6 +151,8 @@ tags
 *.idb
 *.exp
 *.pch
+# 但放行 iOS/Mac 的源码前缀头(*-Prefix.pch / Prefix.pch 是源文件,非编译产物)
+!*Prefix.pch
 
 # 迁移前的原始备份:留在本地,不进版本控制(用户决定)
 projects/NarutoSenki - 副本/
