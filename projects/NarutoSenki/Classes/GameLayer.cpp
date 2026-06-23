@@ -280,7 +280,7 @@ void GameLayer::initTileMap(){
 	std::string key =tool->getKeycode(filePath);
 	int id=tool->checkMD5(filePath);
 	if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID){
-		if(strcmp(key.c_str(),KeyList[id])!=0){
+		if(false){ /* checkMD5 anti-tamper removed (personal port) */
 			return;
 		}
 	}

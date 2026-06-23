@@ -637,7 +637,7 @@ void HeroElement::dealloc(){
 			CCNotificationCenter::sharedNotificationCenter()->removeObserver(this,"acceptAttack");
 				
 			//ÒÆ³ý³ö½ÇÉ«±í
-			int index=_delegate->_CharacterArray->indexOfObject(this);
+			int index=(_delegate && _delegate->_CharacterArray)?(int)_delegate->_CharacterArray->indexOfObject(this):-1; /* guard null array + unsigned CC_INVALID_INDEX */
 			if(index>=0){
 				_delegate->_CharacterArray->removeObjectAtIndex(index);
 			}

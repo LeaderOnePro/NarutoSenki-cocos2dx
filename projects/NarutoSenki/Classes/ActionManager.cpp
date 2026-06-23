@@ -5581,6 +5581,7 @@ void ActionManager::setBulletGroup(float dt){
 
 void ActionManager::setClone(CCNode* sender,void* date){
 	int cloneTime=(int) date;
+	if(!_monsterArray){ _monsterArray=CCArray::create(); _monsterArray->retain(); } /* ensure summon array exists before any addObject: fixes null-deref crash on clone/summon skills */
 	Hero* clone=Hero::create();
 	
 	if(this->_master){
@@ -6507,8 +6508,11 @@ void ActionManager::setTransform(){
 	
 	int tempHP=atoi(this->getHP()->getCString());
 	CCString* tempAttackValue=CCString::createWithFormat("%s",this->getnAttackValue()->getCString());
-	const char* charName;
-	if(strcmp(_character->getCString(),"Naruto")==0){
+	const char* charName = this->_character->getCString(); /* safe default: avoid uninitialized ptr crash for chars without a transform branch (e.g. Pain) */
+	if(strcmp(_character->getCString(),"Pain")==0){
+		this->setID(CCString::create("Nagato"),_role,_group);
+		charName="Nagato";
+	}else if(strcmp(_character->getCString(),"Naruto")==0){
 		this->setID(CCString::create("SageNaruto"),_role,_group);
 		charName="SageNaruto";
 	}else if(strcmp(_character->getCString(),"SageNaruto")==0){
