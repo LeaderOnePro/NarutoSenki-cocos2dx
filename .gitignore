@@ -44,6 +44,10 @@ gen/
 assets/
 local.properties
 
+# Gradle 构建缓存与产物(2026-06-22:proj.android 用现代 Gradle 打包)
+.gradle/
+**/build/outputs/
+
 # Ignore specific winrt files
 cocos2dx/platform/third_party/winrt/freetype/src
 cocos2dx/platform/third_party/winrt/libpng/lpng142
