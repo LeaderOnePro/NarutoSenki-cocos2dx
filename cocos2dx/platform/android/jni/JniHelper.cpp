@@ -96,6 +96,13 @@ extern "C"
             if (! ret)
             {
                  LOGD("Failed to find class of %s", className);
+                 // FindClass 失败会留下挂起的 ClassNotFoundException,必须清除,
+                 // 否则 ART 在下个检查点断言 "No pending exception expected" 而 abort。
+                 // (本项目大量调用已消失的广告/SDK 类 net/zakume/game/*,均走此路径)
+                 if (pEnv->ExceptionCheck())
+                 {
+                     pEnv->ExceptionClear();
+                 }
                 break;
             }
         } while (0);
@@ -117,6 +124,13 @@ extern "C"
             }
 
             jclass classID = getClassID_(className, pEnv);
+            if (! classID)
+            {
+                // Class not found (e.g. removed ad/SDK class net/zakume/game/*).
+                // Return false instead of calling GetStaticMethodID(NULL) which aborts.
+                LOGD("Failed to find class %s", className);
+                break;
+            }
 
             methodID = pEnv->GetStaticMethodID(classID, methodName, paramCode);
             if (! methodID)
@@ -149,6 +163,11 @@ extern "C"
             }
 
             jclass classID = getClassID_(className, pEnv);
+            if (! classID)
+            {
+                LOGD("Failed to find class %s", className);
+                break;
+            }
 
             methodID = pEnv->GetMethodID(classID, methodName, paramCode);
             if (! methodID)

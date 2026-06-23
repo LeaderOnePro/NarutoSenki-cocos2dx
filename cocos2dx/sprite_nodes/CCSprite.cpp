@@ -978,6 +978,15 @@ void CCSprite::updateDisplayedOpacity(GLubyte opacity)
 
 void CCSprite::setDisplayFrame(CCSpriteFrame *pNewFrame)
 {
+    // Missing sprite frames resolve to NULL (e.g. HUD skill icons absent for a
+    // transformed character like Nagato). Ignore instead of dereferencing NULL,
+    // matching the Release-tolerance approach used in createWithSpriteFrameName.
+    if (pNewFrame == NULL)
+    {
+        CCLOG("cocos2d: WARNING: setDisplayFrame called with NULL frame (ignored)");
+        return;
+    }
+
     m_obUnflippedOffsetPositionFromCenter = pNewFrame->getOffset();
 
     CCTexture2D *pNewTexture = pNewFrame->getTexture();
