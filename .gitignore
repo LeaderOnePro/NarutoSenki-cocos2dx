@@ -164,3 +164,8 @@ projects/NarutoSenki - 副本/
 # 游戏资源的冗余拷贝:实际运行用的是 projects/NarutoSenki/Resources,
 # proj.win32/Resources 是重复副本,不跟踪
 projects/NarutoSenki/proj.win32/Resources/
+
+# Coding Agent 工具生成的配置文件(2026-06-24)
+.claude/
+.codex/
+.entire/
