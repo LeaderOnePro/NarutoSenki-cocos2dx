@@ -271,6 +271,7 @@ bool CCArray::isEqualToArray(CCArray* otherArray)
 
 void CCArray::addObject(CCObject* object)
 {
+    if (!object) { return; } /* guard null param: avoid crash when create() returns null */
     ccArrayAppendObjectWithResize(data, object);
 }
 

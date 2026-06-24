@@ -610,7 +610,7 @@ void HeroElement::dealloc(){
 				ActionManager* mo=(ActionManager*) pObject;
 
 				//清除角色表的monter
-				int index=_delegate->_CharacterArray->indexOfObject(mo);
+				int index=(_delegate && _delegate->_CharacterArray)?(int)_delegate->_CharacterArray->indexOfObject(mo):-1;
 				if(index>=0){
 					_delegate->_CharacterArray->removeObjectAtIndex(index);
 				}
@@ -643,7 +643,7 @@ void HeroElement::dealloc(){
 			}
 			
 			if(_master &&  this->_master->getMonsterArray()){
-				int index=_master->getMonsterArray()->indexOfObject(this);
+				int index=(_master && _master->getMonsterArray())?(int)_master->getMonsterArray()->indexOfObject(this):-1;
 				if(index>=0){
 					_master->getMonsterArray()->removeObjectAtIndex(index);
 				}
@@ -751,7 +751,7 @@ void HeroElement::dealloc(){
 						ActionManager* mo=(ActionManager*) pObject;
 
 						//清除角色表的monter
-						int index=_delegate->_CharacterArray->indexOfObject(mo);
+						int index=(_delegate && _delegate->_CharacterArray)?(int)_delegate->_CharacterArray->indexOfObject(mo):-1;
 						if(index>=0){
 							_delegate->_CharacterArray->removeObjectAtIndex(index);
 						}
@@ -1136,11 +1136,11 @@ void Flog::dealloc(){
 	this->stopAllActions();
 
 	if(strcmp(this->getGroup()->getCString(),"Konoha")==0){
-		int index=_delegate->_KonohaFlogArray->indexOfObject(this);
-		_delegate->_KonohaFlogArray->removeObjectAtIndex(index);
+		int index=(_delegate && _delegate->_KonohaFlogArray)?(int)_delegate->_KonohaFlogArray->indexOfObject(this):-1;
+		if(index>=0){ _delegate->_KonohaFlogArray->removeObjectAtIndex(index); }
 	}else{
-		int index=_delegate->_AkatsukiFlogArray->indexOfObject(this);
-		_delegate->_AkatsukiFlogArray->removeObjectAtIndex(index);
+		int index=(_delegate && _delegate->_AkatsukiFlogArray)?(int)_delegate->_AkatsukiFlogArray->indexOfObject(this):-1;
+		if(index>=0){ _delegate->_AkatsukiFlogArray->removeObjectAtIndex(index); }
 	};
 	this->removeFromParent();
 	
@@ -1296,8 +1296,8 @@ void Tower::dealloc(){
 	
 
 
-	int index=_delegate->_TowerArray->indexOfObject(this);
-	_delegate->_TowerArray->removeObjectAtIndex(index);
+	int index=(_delegate && _delegate->_TowerArray)?(int)_delegate->_TowerArray->indexOfObject(this):-1;
+	if(index>=0){ _delegate->_TowerArray->removeObjectAtIndex(index); }
 	_delegate->getHudLayer()->setTowerState(this->getCharNO());
 	_delegate->checkTower();
 	this->removeFromParentAndCleanup(true);
@@ -1675,9 +1675,9 @@ void Monster::dealloc(){
 		CCARRAY_FOREACH(_master->getMonsterArray(),pObject){
 			Monster* mo=(Monster*) pObject;
 
-			if(strcmp(mo->getCharacter()->getCString(),"HiraishinMark")==0){
-				int index=_master->getMonsterArray()->indexOfObject(mo);
-				_master->getMonsterArray()->removeObjectAtIndex(index);
+				if(strcmp(mo->getCharacter()->getCString(),"HiraishinMark")==0){
+					int index=(_master && _master->getMonsterArray())?(int)_master->getMonsterArray()->indexOfObject(mo):-1;
+					if(index>=0){ _master->getMonsterArray()->removeObjectAtIndex(index); }
 				mo->removeFromParentAndCleanup(true);
 			}
 			
@@ -1687,11 +1687,11 @@ void Monster::dealloc(){
 
 	}
 	
-	if(strcmp(this->getCharacter()->getCString(),"SmallSlug")==0){
-		if(_secmaster && _secmaster->getMonsterArray()){
-			int index=_secmaster->getMonsterArray()->indexOfObject(this);
-			if(index>=0){
-				_secmaster->getMonsterArray()->removeObjectAtIndex(index);
+		if(strcmp(this->getCharacter()->getCString(),"SmallSlug")==0){
+			if(_secmaster && _secmaster->getMonsterArray()){
+				int index=(_secmaster && _secmaster->getMonsterArray())?(int)_secmaster->getMonsterArray()->indexOfObject(this):-1;
+				if(index>=0){
+					_secmaster->getMonsterArray()->removeObjectAtIndex(index);
 			}
 
 		}
@@ -1699,10 +1699,10 @@ void Monster::dealloc(){
 	}else {
 
 		if(_master &&  _master->getMonsterArray()){
-			int index=_master->getMonsterArray()->indexOfObject(this);
-			if(index>=0){
-				_master->getMonsterArray()->removeObjectAtIndex(index);
-			}
+				int index=(_master && _master->getMonsterArray())?(int)_master->getMonsterArray()->indexOfObject(this):-1;
+				if(index>=0){
+					_master->getMonsterArray()->removeObjectAtIndex(index);
+				}
 
 		}
 
@@ -1943,16 +1943,15 @@ void Bullet::dealloc(){
 			}
 		}	
 
-		if(_master &&  _master->getMonsterArray()){
-			int index=_master->getMonsterArray()->indexOfObject(this);
-			if(index>=0){
-				_master->getMonsterArray()->removeObjectAtIndex(index);
+			if(_master &&  _master->getMonsterArray()){
+				int index=(_master && _master->getMonsterArray())?(int)_master->getMonsterArray()->indexOfObject(this):-1;
+				if(index>=0){
+					_master->getMonsterArray()->removeObjectAtIndex(index);
+				}
 			}
-		}
-		this->removeFromParentAndCleanup(true);
 	}
-	
 }
+	
 
 void Bullet::dealloc2(){
 
