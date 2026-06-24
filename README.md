@@ -1,10 +1,103 @@
 # NarutoSenki-cocos2dx
 
-这是一个火影战记的 C++ 移植与现代化重构版本。基于 **Cocos2d-x 2.2.6** 框架构建，针对 Windows 平台及现代开发环境（VS2026）进行了全面适配与体验优化。
+这是一个火影战记的 C++ 移植与现代化重构版本。基于 **Cocos2d-x 2.2.6** 框架构建，针对 Windows 平台及现代开发环境（VS2026）进行了全面适配与体验优化，并已成功移植到 **Android** 平台。
 
 ---
 
-## 🎮 火影战记快速上手指南
+## 📱 Android 构建指南
+
+### 1. 环境要求
+
+| 组件 | 版本 | 安装方式 |
+|---|---|---|
+| **macOS** | 13+ (Apple Silicon / Intel) | — |
+| **JDK** | 17 (LTS) | `brew install openjdk@17` |
+| **Android SDK** | commandlinetools 最新版 | `brew install --cask android-commandlinetools` |
+| **Android NDK** | **r10e** (必须,不可换) | [Unsupported NDK Downloads](https://developer.android.com/ndk/downloads/older_releases) |
+| **Gradle** | 8.7 (wrapper 自动管理) | 无需手动安装 |
+
+> ⚠️ **NDK 版本必须为 r10e**。cocos2d-x 2.2.6 使用 `gnustl_static` + gcc,这两个在 NDK r18+ 中已被移除。r10e 是经过验证的唯一可用版本。
+
+### 2. SDK 组件安装
+
+```bash
+export ANDROID_HOME=/opt/homebrew/share/android-commandlinetools
+yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager \
+  "platform-tools" "platforms;android-34" "build-tools;34.0.0"
+```
+
+### 3. NDK 安装
+
+从 [Unsupported NDK Downloads](https://developer.android.com/ndk/downloads/older_releases) 下载 `android-ndk-r10e-darwin-x86_64.zip`,解压到 `~/Library/Android/android-ndk-r10e`。
+
+### 4. 环境变量(`~/.zshrc`)
+
+```bash
+export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+export ANDROID_HOME=/opt/homebrew/share/android-commandlinetools
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export NDK_ROOT=~/Library/Android/android-ndk-r10e
+export PATH=$PATH:$NDK_ROOT
+```
+
+### 5. 编译步骤
+
+**编译 Native C++(.so):**
+
+```bash
+cd projects/NarutoSenki/proj.android
+arch -x86_64 /bin/bash -c '\
+  export NDK_MODULE_PATH="$(pwd)/../../..:$(pwd)/../../../cocos2dx/platform/third_party/android/prebuilt" && \
+  $NDK_ROOT/ndk-build -C .\
+'
+```
+
+> ⚠️ Apple Silicon 必须通过 `arch -x86_64` 运行 `ndk-build`,否则报 "Unknown host CPU" 错误。
+
+**打包 APK:**
+
+```bash
+cd projects/NarutoSenki/proj.android
+export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+./gradlew assembleDebug      # Debug APK
+./gradlew assembleRelease    # Release APK(正式签名)
+```
+
+产物:
+- Debug: `build/outputs/apk/debug/NarutoSenki-debug.apk`
+- Release: `build/outputs/apk/release/NarutoSenki-release.apk`
+
+### 6. 安装到手机
+
+```bash
+adb install projects/NarutoSenki/proj.android/build/outputs/apk/debug/NarutoSenki-debug.apk
+adb shell am start -n dev.leaderone.narutosenki/.AppActivity
+```
+
+> Debug 和 Release 签名不同,切换时需要先 `adb uninstall`。
+
+### 7. 真机调试
+
+```bash
+# 实时监控崩溃
+adb logcat -v threadtime | grep -E "FATAL|leaderone"
+
+# 读取系统 tombstone(最可靠的崩溃栈来源)
+adb shell "ls -t /data/tombstones/tombstone_* | head -1 | xargs cat"
+```
+
+### 8. 已知问题
+
+| 问题 | 说明 | 状态 |
+|---|---|---|
+| 野指针崩溃 | `setClone` 中 `Hero::create()` 返回的 autorelease 对象可能在回调链中被提前释放 | 🔴 未彻底解决 |
+| 奥义 2 闪退 | 长门/佩恩奥义 2 或奥义 1 频繁使用时偶发崩溃 | 🔴 同上 |
+| 32 位 only | 目前仅支持 `armeabi-v7a`(32 位),纯 64 位机型可能无法安装 | 🟡 已知限制 |
+
+---
+
+## 🎮 火影战记快速上手指南(Windows)
 
 ### 1. 开发环境要求
 - **操作系统**: Windows 10/11
