@@ -8,15 +8,17 @@
 
 ### 1. 环境要求
 
+> 以下基于 macOS 开发环境验证。其他平台( Linux / Windows + WSL)理论可用,但未经验证。
+
 | 组件 | 版本 | 安装方式 |
 |---|---|---|
-| **macOS** | 13+ (Apple Silicon / Intel) | — |
+| **macOS** | 13+ (Apple Silicon 已验证,Intel 未验证) | — |
 | **JDK** | 17 (LTS) | `brew install openjdk@17` |
 | **Android SDK** | commandlinetools 最新版 | `brew install --cask android-commandlinetools` |
-| **Android NDK** | **r10e** (必须,不可换) | [Unsupported NDK Downloads](https://developer.android.com/ndk/downloads/older_releases) |
+| **Android NDK** | **r10e** | [Unsupported NDK Downloads](https://developer.android.com/ndk/downloads/older_releases) |
 | **Gradle** | 8.7 (wrapper 自动管理) | 无需手动安装 |
 
-> ⚠️ **NDK 版本必须为 r10e**。cocos2d-x 2.2.6 使用 `gnustl_static` + gcc,这两个在 NDK r18+ 中已被移除。r10e 是经过验证的唯一可用版本。
+> ⚠️ cocos2d-x 2.2.6 使用 `gnustl_static` + gcc,这两个在 NDK r18+ 中已被移除。NDK r10e 是经过验证可用的版本之一,r17c 同样包含 gnustl 也可作为备选,但未在本项目验证。
 
 ### 2. SDK 组件安装
 
@@ -97,7 +99,7 @@ adb shell "ls -t /data/tombstones/tombstone_* | head -1 | xargs cat"
 
 ---
 
-## 🎮 火影战记快速上手指南(Windows)
+## 🪟 Win32 构建指南
 
 ### 1. 开发环境要求
 - **操作系统**: Windows 10/11
