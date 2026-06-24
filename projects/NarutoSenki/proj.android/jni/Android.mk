@@ -4,7 +4,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := narutosenki_shared
 
-LOCAL_MODULE_FILENAME := libnarutosenki
+LOCAL_MODULE_FILENAME := libcocos2dcpp
 
 # JNI 入口 + 全部游戏逻辑(27 个 .cpp + MyUtils/sqlite3.c)。
 # 与 win32 工程一致地全量编入;NetworkLayer 一并保留(依赖的 curl 已随 third_party/android 补回)。

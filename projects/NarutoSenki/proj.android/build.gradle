@@ -3,16 +3,16 @@ plugins {
 }
 
 android {
-    namespace 'com.leaderone.narutosenki'
+    namespace 'dev.leaderone.narutosenki'
     compileSdk 34
     ndkVersion ''   // native 用外部老 NDK(ndk-build)预编译,Gradle 不参与编 C++
 
     defaultConfig {
-        applicationId 'com.leaderone.narutosenki'
+        applicationId 'dev.leaderone.narutosenki'
         minSdk 19
         targetSdk 34
-        versionCode 1
-        versionName '1.0'
+        versionCode 24
+        versionName '1.23'
         // 仅打包 armeabi-v7a(预编译 .so 只有这个 ABI)
         ndk { abiFilters 'armeabi-v7a' }
     }
