@@ -2,9 +2,26 @@ plugins {
     id 'com.android.application' version '8.5.2'
 }
 
+// 从仓库外的本地文件读签名信息(密码不入 git)
+def keystoreProperties = new Properties()
+def keystorePropsFile = file(System.properties['user.home'] + '/.android/keystores/narutosenki.properties')
+if (keystorePropsFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropsFile))
+}
+
 android {
     namespace 'dev.leaderone.narutosenki'
     compileSdk 34
+    signingConfigs {
+        release {
+            if (keystorePropsFile.exists()) {
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+            }
+        }
+    }
     ndkVersion ''   // native 用外部老 NDK(ndk-build)预编译,Gradle 不参与编 C++
 
     defaultConfig {
@@ -35,6 +52,10 @@ android {
             // 关闭 CheckJNI:原版是 release 包(CheckJNI 关)。否则 GBK 中文经
             // Java NewStringUTF(要求 Modified UTF-8)会触发 JNI abort 闪退。
             debuggable false
+        }
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
         }
     }
 
