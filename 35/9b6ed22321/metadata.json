@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "359b6ed22321",
+  "strategy": "manual-commit",
+  "branch": "feat/android-revive-pain-orochimaru",
+  "checkpoints_count": 6,
+  "files_touched": [
+    "cocos2dx/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp"
+  ],
+  "sessions": [
+    {
+      "metadata": "/35/9b6ed22321/0/metadata.json",
+      "transcript": "/35/9b6ed22321/0/full.jsonl",
+      "compact_transcript": "/35/9b6ed22321/0/transcript.jsonl",
+      "content_hash": "/35/9b6ed22321/0/content_hash.txt",
+      "prompt": "/35/9b6ed22321/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 5436,
+    "cache_creation_tokens": 8478874,
+    "cache_read_tokens": 1900442,
+    "output_tokens": 124898,
+    "api_call_count": 70
+  }
+}
