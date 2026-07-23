@@ -5581,7 +5581,6 @@ void ActionManager::setBulletGroup(float dt){
 
 void ActionManager::setClone(CCNode* sender,void* date){
 	int cloneTime=(int) date;
-	if(!_monsterArray){ _monsterArray=CCArray::create(); _monsterArray->retain(); } /* ensure summon array exists before any addObject: fixes null-deref crash on clone/summon skills */
 	Hero* clone=Hero::create();
 	
 	if(this->_master){

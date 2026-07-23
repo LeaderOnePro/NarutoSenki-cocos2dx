@@ -643,7 +643,7 @@ void HeroElement::dealloc(){
 			}
 			
 			if(_master &&  this->_master->getMonsterArray()){
-				int index=(_master && _master->getMonsterArray())?(int)_master->getMonsterArray()->indexOfObject(this):-1;
+				int index=_master->getMonsterArray()->indexOfObject(this);
 				if(index>=0){
 					_master->getMonsterArray()->removeObjectAtIndex(index);
 				}
@@ -1676,7 +1676,7 @@ void Monster::dealloc(){
 			Monster* mo=(Monster*) pObject;
 
 				if(strcmp(mo->getCharacter()->getCString(),"HiraishinMark")==0){
-					int index=(_master && _master->getMonsterArray())?(int)_master->getMonsterArray()->indexOfObject(mo):-1;
+					int index=_master->getMonsterArray()->indexOfObject(mo);
 					if(index>=0){ _master->getMonsterArray()->removeObjectAtIndex(index); }
 				mo->removeFromParentAndCleanup(true);
 			}
@@ -1689,7 +1689,7 @@ void Monster::dealloc(){
 	
 		if(strcmp(this->getCharacter()->getCString(),"SmallSlug")==0){
 			if(_secmaster && _secmaster->getMonsterArray()){
-				int index=(_secmaster && _secmaster->getMonsterArray())?(int)_secmaster->getMonsterArray()->indexOfObject(this):-1;
+				int index=_secmaster->getMonsterArray()->indexOfObject(this);
 				if(index>=0){
 					_secmaster->getMonsterArray()->removeObjectAtIndex(index);
 			}
@@ -1699,7 +1699,7 @@ void Monster::dealloc(){
 	}else {
 
 		if(_master &&  _master->getMonsterArray()){
-				int index=(_master && _master->getMonsterArray())?(int)_master->getMonsterArray()->indexOfObject(this):-1;
+				int index=_master->getMonsterArray()->indexOfObject(this);
 				if(index>=0){
 					_master->getMonsterArray()->removeObjectAtIndex(index);
 				}
@@ -1944,7 +1944,7 @@ void Bullet::dealloc(){
 		}	
 
 			if(_master &&  _master->getMonsterArray()){
-				int index=(_master && _master->getMonsterArray())?(int)_master->getMonsterArray()->indexOfObject(this):-1;
+				int index=_master->getMonsterArray()->indexOfObject(this);
 				if(index>=0){
 					_master->getMonsterArray()->removeObjectAtIndex(index);
 				}
