@@ -15,6 +15,11 @@ extern "C" {
     }
 
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnPause() {
+        // Guard: if the GL view isn't ready (pause fired before init or after teardown,
+        // e.g. lock-screen / backgrounding races), skip to avoid null-deref crash.
+        if (! CCDirector::sharedDirector()->getOpenGLView()) {
+            return;
+        }
         CCApplication::sharedApplication()->applicationDidEnterBackground();
 
         CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_COME_TO_BACKGROUND, NULL);
