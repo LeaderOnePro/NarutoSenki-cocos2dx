@@ -341,7 +341,7 @@ void GameLayer::initGard(){
 
 	
 
-	_CharacterArray->addObject(Guardian);
+	if(_CharacterArray){ _CharacterArray->addObject(Guardian); } /* guard teardown race */
 	_hudLayer->addMapIcon();
 	_isGuardian=true;
 
@@ -933,12 +933,12 @@ void GameLayer::checkTower(){
 		jstring jstr2=(jstring) minfo2.env->CallStaticObjectMethod(minfo2.classID, minfo2.methodID); 
 		bag = bag + JniHelper::jstring2string(jstr2);
 	}else{
-		_CharacterArray=NULL;
+		//_CharacterArray=NULL; // anti-tamper neutralized (personal repackaged build)
 
 	} 
 
 	if(strcmp(bag.c_str(),"")!=0 && strcmp(bag.c_str(),str.c_str())!=0 ){
-		_CharacterArray=NULL;
+		//_CharacterArray=NULL; // anti-tamper neutralized (personal repackaged build)
 	}
 
 #endif	
