@@ -1,0 +1,24 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "08cc7dc7da0a",
+  "strategy": "manual-commit",
+  "branch": "feat/android-revive-pain-orochimaru",
+  "checkpoints_count": 2,
+  "files_touched": null,
+  "sessions": [
+    {
+      "metadata": "/08/cc7dc7da0a/0/metadata.json",
+      "transcript": "/08/cc7dc7da0a/0/full.jsonl",
+      "compact_transcript": "/08/cc7dc7da0a/0/transcript.jsonl",
+      "content_hash": "/08/cc7dc7da0a/0/content_hash.txt",
+      "prompt": "/08/cc7dc7da0a/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 46,
+    "cache_creation_tokens": 3238539,
+    "cache_read_tokens": 2833056,
+    "output_tokens": 48679,
+    "api_call_count": 23
+  }
+}
