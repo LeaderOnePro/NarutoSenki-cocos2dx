@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "ec4ac16de4cd",
+  "strategy": "manual-commit",
+  "branch": "feat/macos-build",
+  "checkpoints_count": 6,
+  "files_touched": [
+    "CocosDenshion/mac/CDXMacOSXSupport.h"
+  ],
+  "sessions": [
+    {
+      "metadata": "/ec/4ac16de4cd/0/metadata.json",
+      "transcript": "/ec/4ac16de4cd/0/full.jsonl",
+      "compact_transcript": "/ec/4ac16de4cd/0/transcript.jsonl",
+      "content_hash": "/ec/4ac16de4cd/0/content_hash.txt",
+      "prompt": "/ec/4ac16de4cd/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 234,
+    "cache_creation_tokens": 11542800,
+    "cache_read_tokens": 16121184,
+    "output_tokens": 128710,
+    "api_call_count": 137
+  }
+}
