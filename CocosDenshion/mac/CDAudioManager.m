@@ -323,10 +323,9 @@ static BOOL configured = FALSE;
 }    
 
 -(BOOL) isOtherAudioPlaying {
-    UInt32 isPlaying = 0;
-    UInt32 varSize = sizeof(isPlaying);
-    AudioSessionGetProperty (kAudioSessionProperty_OtherAudioIsPlaying, &varSize, &isPlaying);
-    return (isPlaying != 0);
+    // AudioSession API is iOS-only and unavailable on modern macOS SDK.
+    // On macOS there is no ringer/other-audio concept relevant here — assume none.
+    return NO;
 }
 
 -(void) setMode:(tAudioManagerMode) mode {
@@ -478,30 +477,12 @@ static BOOL configured = FALSE;
 #if TARGET_IPHONE_SIMULATOR
     //Calling audio route stuff on the simulator causes problems
     return NO;
-#else    
-    CFStringRef newAudioRoute;
-    UInt32 propertySize = sizeof (CFStringRef);
-    
-    AudioSessionGetProperty (
-                             kAudioSessionProperty_AudioRoute,
-                             &propertySize,
-                             &newAudioRoute
-                             );
-    
-    if (newAudioRoute == NULL) {
-        //Don't expect this to happen but playing safe otherwise a null in the CFStringCompare will cause a crash
-        return YES;
-    } else {    
-        CFComparisonResult newDeviceIsMuted =    CFStringCompare (
-                                                                 newAudioRoute,
-                                                                 (CFStringRef) @"",
-                                                                 0
-                                                                 );
-        
-        return (newDeviceIsMuted == kCFCompareEqualTo);
-    }    
+#else
+    // AudioSession route querying is iOS-only and unavailable on modern macOS SDK.
+    // macOS has no hardware ringer-mute switch to poll — treat device as not muted.
+    return NO;
 #endif
-}    
+}
 
 #pragma mark Audio Interrupt Protocol
 
