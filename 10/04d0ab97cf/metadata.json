@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "1004d0ab97cf",
+  "strategy": "manual-commit",
+  "branch": "feat/macos-build",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "projects/NarutoSenki/Classes/Element.cpp",
+    "projects/NarutoSenki/Classes/HudLayer.cpp"
+  ],
+  "sessions": [
+    {
+      "metadata": "/10/04d0ab97cf/0/metadata.json",
+      "transcript": "/10/04d0ab97cf/0/full.jsonl",
+      "compact_transcript": "/10/04d0ab97cf/0/transcript.jsonl",
+      "content_hash": "/10/04d0ab97cf/0/content_hash.txt",
+      "prompt": "/10/04d0ab97cf/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 5953,
+    "cache_creation_tokens": 29975935,
+    "cache_read_tokens": 46194998,
+    "output_tokens": 508133,
+    "api_call_count": 359
+  }
+}
