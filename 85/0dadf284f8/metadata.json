@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "850dadf284f8",
+  "strategy": "manual-commit",
+  "branch": "feat/macos-build",
+  "checkpoints_count": 5,
+  "files_touched": [
+    "projects/NarutoSenki/Classes/StartMenu.cpp"
+  ],
+  "sessions": [
+    {
+      "metadata": "/85/0dadf284f8/0/metadata.json",
+      "transcript": "/85/0dadf284f8/0/full.jsonl",
+      "compact_transcript": "/85/0dadf284f8/0/transcript.jsonl",
+      "content_hash": "/85/0dadf284f8/0/content_hash.txt",
+      "prompt": "/85/0dadf284f8/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 6032,
+    "cache_creation_tokens": 30886896,
+    "cache_read_tokens": 63037501,
+    "output_tokens": 591356,
+    "api_call_count": 402
+  }
+}
