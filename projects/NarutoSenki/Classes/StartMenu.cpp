@@ -3397,7 +3397,7 @@ void StartMenu::onTrainingCallBack(){
 	// Both NetworkLayer::init and SelectLayer::init load their own atlases
 	// (Record/UI/Report/Ougis/Map/Gears); only Select.plist (loaded above) must
 	// come from the caller. Old hard-coded Tsunade logic below stays unreachable.
-	{
+	if(Cheats<=10){ // 4v4 (Cheats>10): skip bond mode, fall through to original 8-hero builder below
 		CCScene* selectScene = CCScene::create();
 		NetworkLayer* selectLayer = NetworkLayer::create();
 		selectScene->addChild(selectLayer);
@@ -3408,7 +3408,7 @@ void StartMenu::onTrainingCallBack(){
 
 	int i=1;
 
-	if(adResult!=1){
+	if(adResult!=1 && Cheats<=10){ // keep Cheats>10 intact for 4v4
 	Cheats=0;
 	}
 	
