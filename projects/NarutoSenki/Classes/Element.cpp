@@ -1949,6 +1949,7 @@ void Bullet::dealloc(){
 					_master->getMonsterArray()->removeObjectAtIndex(index);
 				}
 			}
+		this->removeFromParentAndCleanup(true);
 	}
 }
 	
