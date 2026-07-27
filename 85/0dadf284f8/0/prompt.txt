@@ -245,3 +245,25 @@ Cocos2d: [4v4-TOWER] idx=5 name=AkatsukiCenter group=Akatsuki pos=(2864,112)</ev
 ---
 
 这样改动有点大了是不是？要不然还是B吧，官方版本也是随机角色，不能选角色
+
+---
+
+<task-notification>
+<task-id>bs5bdux3o</task-id>
+<summary>Monitor event: "4v4 option-B verification log"</summary>
+<event>Cocos2d: [4v4-START] zhenying=1 Cheats=11 Heros.count=8
+Cocos2d: [4v4-HERO] i=0 char=Tobi role=Player group=Konoha spawn=(432,80)
+Cocos2d: [4v4-HERO] i=1 char=Kiba role=Com group=Konoha spawn=(352,128)
+Cocos2d: [4v4-HERO] i=2 char=Neji role=Com group=Konoha spawn=(352,32)
+Cocos2d: [4v4-HERO] i=3 char=Suigetsu role=Com group=Konoha spawn=(304,80)
+Cocos2d: [4v4-HERO] i=4 char=Sakura role=Com group=Akatsuki spawn=(2688,128)
+Cocos2d: [4v4-HERO] i=5 char=Naruto role=Com group=Akatsuki spawn=(2736,80)
+Cocos2d: [4v4-HERO] i=6 char=Shikamaru role=Com group=Akatsuki spawn=(2688,32)
+Cocos2d: [4v4-HERO] i=7 char=Gaara role=Com group=Akatsuki spawn=(2608,80)
+Cocos2d: [4v4-TOWER] idx=0 name=KonohaTower2 group=Konoha pos=(1104,96)
+Cocos2d: [4v4-TOWER] idx=1 name=KonohaTower1 group=Konoha pos=(592,96)
+Cocos2d: [4v4-TOWER] idx=2 name=KonohaCenter group=Konoha pos=(208,96)
+Cocos2d: [4v4-TOWER] idx=3 name=AkatsukiTower2 group=Akatsuki pos=(1968,96)
+Cocos2d: [4v4-TOWER] idx=4 name=AkatsukiTower1 group=Akatsuki pos=(2480,96)
+Cocos2d: [4v4-TOWER] idx=5 name=AkatsukiCenter group=Akatsuki pos=(2864,96)</event>
+</task-notification>
