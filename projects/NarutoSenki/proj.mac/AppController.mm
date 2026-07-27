@@ -36,24 +36,35 @@
 		// create the window
 		// note that using NSResizableWindowMask causes the window to be a little
 		// smaller and therefore ipad graphics are not loaded
-        NSRect rect = NSMakeRect(200, 200, 480, 320);
+
+		// Window scale over the 480x320 design resolution. 2 == same "2x" feel as the
+		// win32 build (setFrameZoomFactor(2)); bump to 3.0 for an even bigger window.
+		const CGFloat kWinScale = 2.0;
+		NSRect rect = NSMakeRect(200, 200, 480 * kWinScale, 320 * kWinScale);
 		window = [[NSWindow alloc] initWithContentRect:rect
 			styleMask:( NSClosableWindowMask | NSTitledWindowMask )
 			backing:NSBackingStoreBuffered
 			defer:YES];
-        
+
         NSOpenGLPixelFormatAttribute attributes[] = {
             NSOpenGLPFADoubleBuffer,
             NSOpenGLPFADepthSize, 24,
             NSOpenGLPFAStencilSize, 8,
             0
         };
-        
+
         NSOpenGLPixelFormat *pixelFormat = [[[NSOpenGLPixelFormat alloc] initWithAttributes:attributes] autorelease];
-		
+
 		// allocate our GL view
 		// (isn't there already a shared EAGLView?)
 		glView = [[EAGLView alloc] initWithFrame:rect pixelFormat:pixelFormat];
+
+		// Keep the GL drawable at 1 pixel-per-point (no Retina 2x backing). cocos2d-x 2.2.6
+		// computes the GL viewport in POINTS; on a Retina screen the NSOpenGLView otherwise
+		// gets a 2x-pixel drawable while the viewport stays 1x, so the scene only fills the
+		// bottom-left quarter of the window. Forcing a 1x surface makes pixels == points, so
+		// setViewPortInPoints() fills the whole window (menu AND battle).
+		[glView setWantsBestResolutionOpenGLSurface:NO];
 
 		// set window parameters
 		[window becomeFirstResponder];

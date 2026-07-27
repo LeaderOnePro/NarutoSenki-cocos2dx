@@ -3883,5 +3883,7 @@ void StartMenu::onExitCallBack(){
 	CCDirector::sharedDirector()->end(); // Android: quit directly
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	CCDirector::sharedDirector()->end(); // PC: quit the game (Android keeps the exit dialog)
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+	exit(0); // macOS: quit the app
 #endif
 }
