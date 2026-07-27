@@ -343,7 +343,7 @@ void HudLayer::initHeroInterface(){
 	
 	
 	expLabel=CCLabelBMFont::create(CCString::createWithFormat("%d%%",
-		this->_delegate->currentPlayer->getEXP()-((this->_delegate->currentPlayer->getLV() -1 )*500)/500)->getCString(),"Fonts/1.fnt");
+		(int)(this->_delegate->currentPlayer->getEXP()-((this->_delegate->currentPlayer->getLV() -1 )*500)/500))->getCString(),"Fonts/1.fnt");
 	expLabel->setScale(0.35f);
 	expLabel->setPosition(ccp(94,winSize.height-54));
 	expLabel->setAnchorPoint(ccp(0.5f,0));

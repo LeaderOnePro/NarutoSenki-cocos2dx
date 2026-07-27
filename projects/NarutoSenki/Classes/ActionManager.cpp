@@ -2459,7 +2459,7 @@ void ActionManager::setMove(CCNode* sender,void* date){
 		} 
 		moveLength=this->getKnockLength();
 	}else{
-		moveLength=(int) date;
+		moveLength=(int)(intptr_t) date;
 	}
 
 	if( this->getPositionX()>_delegate->currentMap->getTileSize().width &&
@@ -2514,7 +2514,7 @@ void ActionManager::setJump(CCNode* sender,void* date){
 
 
 void ActionManager::setCharge(CCNode* sender,void* date){
-	int moveLength=(int) date;
+	int moveLength=(int)(intptr_t) date;
 	if( (this->getPositionX()<_delegate->currentMap->getTileSize().width && _isFlipped) ||
 		(this->getPositionX()>(_delegate->currentMap->getMapSize().width-1)*_delegate->currentMap->getTileSize().width && !_isFlipped)
 		){
@@ -2529,7 +2529,7 @@ void ActionManager::setCharge(CCNode* sender,void* date){
 
 // with out getCollider
 void ActionManager::setChargeB(CCNode* sender,void* date){
-	int moveLength=(int) date;
+	int moveLength=(int)(intptr_t) date;
 	float delay;
 	if(_actionState==ACTION_STATE_OATTACK || _actionState==ACTION_STATE_O2ATTACK){
 		delay=0.4f;
@@ -2902,7 +2902,7 @@ void ActionManager::setCommand(CCNode* sender,void* date){
 
 
 void ActionManager::setBuff(CCNode* sender,void* date){
-	int buffValue=(int) date;
+	int buffValue=(int)(intptr_t) date;
 	float buffStayTime=_attackRangeY;
 
 	if(strcmp(_attackType->getCString(),"hBuff")==0){
@@ -5435,7 +5435,7 @@ void ActionManager::stopMove(float dt){
 }
 
 void ActionManager::stopJump(CCNode* sender,void* date){
-	int stopTime=(int) date;
+	int stopTime=(int)(intptr_t) date;
 
 	if(_actionState==ACTION_STATE_JUMP){
 		this->getActionManager()->pauseTarget(this);
@@ -5580,7 +5580,8 @@ void ActionManager::setBulletGroup(float dt){
 
 
 void ActionManager::setClone(CCNode* sender,void* date){
-	int cloneTime=(int) date;
+	int cloneTime=(int)(intptr_t) date;
+	if(!_monsterArray){ _monsterArray=CCArray::create(); _monsterArray->retain(); } /* ensure summon array exists before any addObject: fixes null-deref crash on clone/summon skills */
 	Hero* clone=Hero::create();
 	
 	if(this->_master){
@@ -6431,7 +6432,7 @@ void ActionManager::removeSelf(float dt){
 }
 
 void ActionManager::setMonAttack(CCNode* sender,void* date){
-	int skillNum=(int) date;
+	int skillNum=(int)(intptr_t) date;
 	if(this->getMonsterArray()){
 		CCObject* pObject;
 		CCARRAY_FOREACH(this->getMonsterArray(),pObject){
@@ -6507,8 +6508,11 @@ void ActionManager::setTransform(){
 	
 	int tempHP=atoi(this->getHP()->getCString());
 	CCString* tempAttackValue=CCString::createWithFormat("%s",this->getnAttackValue()->getCString());
-	const char* charName;
-	if(strcmp(_character->getCString(),"Naruto")==0){
+	const char* charName = this->_character->getCString(); /* safe default: avoid uninitialized ptr crash for chars without a transform branch (e.g. Pain) */
+	if(strcmp(_character->getCString(),"Pain")==0){
+		this->setID(CCString::create("Nagato"),_role,_group);
+		charName="Nagato";
+	}else if(strcmp(_character->getCString(),"Naruto")==0){
 		this->setID(CCString::create("SageNaruto"),_role,_group);
 		charName="SageNaruto";
 	}else if(strcmp(_character->getCString(),"SageNaruto")==0){

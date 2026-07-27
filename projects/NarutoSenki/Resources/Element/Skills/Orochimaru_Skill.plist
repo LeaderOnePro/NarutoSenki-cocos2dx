@@ -244,13 +244,13 @@
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>Orochimaru_Skill.pvr.ccz</string>
+            <string>Orochimaru_Skill.png</string>
             <key>size</key>
             <string>{512,1024}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:34d36dd975019d71741b32da8c6ef933$</string>
+            <string>$TexturePacker:SmartUpdate:209dccbd0aecc224d7929e5292117ae5$</string>
             <key>textureFileName</key>
-            <string>Orochimaru_Skill.pvr.ccz</string>
+            <string>Orochimaru_Skill.png</string>
         </dict>
     </dict>
 </plist>

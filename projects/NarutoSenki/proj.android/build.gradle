@@ -1,0 +1,72 @@
+plugins {
+    id 'com.android.application' version '8.5.2'
+}
+
+// 从仓库外的本地文件读签名信息(密码不入 git)
+def keystoreProperties = new Properties()
+def keystorePropsFile = file(System.properties['user.home'] + '/.android/keystores/narutosenki.properties')
+if (keystorePropsFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropsFile))
+}
+
+android {
+    namespace 'dev.leaderone.narutosenki'
+    compileSdk 34
+    signingConfigs {
+        release {
+            if (keystorePropsFile.exists()) {
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+            }
+        }
+    }
+    ndkVersion ''   // native 用外部老 NDK(ndk-build)预编译,Gradle 不参与编 C++
+
+    defaultConfig {
+        applicationId 'dev.leaderone.narutosenki'
+        minSdk 19
+        targetSdk 34
+        versionCode 24
+        versionName '1.23'
+        // 仅打包 armeabi-v7a(预编译 .so 只有这个 ABI)
+        ndk { abiFilters 'armeabi-v7a' }
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            // 游戏 Activity + 框架 org.cocos2dx.lib 全部 Java
+            java.srcDirs = ['src', '../../../cocos2dx/platform/android/java/src']
+            // ndk-build 产出的预编译 .so
+            jniLibs.srcDirs = ['libs']
+            // 直接用仓库内的游戏资源,不复制(避免与 gitignore 的 assets/ 冲突)
+            assets.srcDirs = ['../Resources']
+            res.srcDirs = ['res']
+        }
+    }
+
+    buildTypes {
+        debug {
+            // 关闭 CheckJNI:原版是 release 包(CheckJNI 关)。否则 GBK 中文经
+            // Java NewStringUTF(要求 Modified UTF-8)会触发 JNI abort 闪退。
+            debuggable false
+        }
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+        }
+    }
+
+    // 老框架 Java 有大量过时 API 调用,降噪
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}

@@ -701,7 +701,7 @@
 				1551A5E7158F2ADE00E66CFE /* support */,
 				1551A605158F2ADE00E66CFE /* text_input_node */,
 				1551A60B158F2ADE00E66CFE /* textures */,
-				1551A614158F2ADE00E66CFE /* tileMap_parallax_nodes */,
+				1551A614158F2ADE00E66CFE /* tilemap_parallax_nodes */,
 				1551A621158F2ADE00E66CFE /* touch_dispatcher */,
 			);
 			name = cocos2dx;
@@ -1142,7 +1142,7 @@
 			path = textures;
 			sourceTree = "<group>";
 		};
-		1551A614158F2ADE00E66CFE /* tileMap_parallax_nodes */ = {
+		1551A614158F2ADE00E66CFE /* tilemap_parallax_nodes */ = {
 			isa = PBXGroup;
 			children = (
 				1551A615158F2ADE00E66CFE /* CCParallaxNode.cpp */,
@@ -1158,7 +1158,7 @@
 				1551A61F158F2ADE00E66CFE /* CCTMXXMLParser.cpp */,
 				1551A620158F2ADE00E66CFE /* CCTMXXMLParser.h */,
 			);
-			path = tileMap_parallax_nodes;
+			path = tilemap_parallax_nodes;
 			sourceTree = "<group>";
 		};
 		1551A621158F2ADE00E66CFE /* touch_dispatcher */ = {
@@ -1637,7 +1637,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = x86_64;
+				ONLY_ACTIVE_ARCH = NO;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				CLANG_CXX_LIBRARY = "compiler-default";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1662,7 +1664,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = x86_64;
+				ONLY_ACTIVE_ARCH = NO;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				CLANG_CXX_LIBRARY = "compiler-default";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;

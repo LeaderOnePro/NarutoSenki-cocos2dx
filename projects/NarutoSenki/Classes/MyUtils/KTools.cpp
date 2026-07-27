@@ -431,6 +431,7 @@ void  KTools::prepareFileSHA(){
 
 
 int KTools::checkMD5(std::string findPath /* ="" */){
+	if (findPath.empty()) return 1; /* bypass anti-tamper MD5 gate: personal Android port w/ resigned APK */
 	//MD5 
 	
 	std::string md5Path =  "Element/md5.xml";

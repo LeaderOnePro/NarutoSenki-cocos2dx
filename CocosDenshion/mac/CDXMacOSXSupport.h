@@ -40,10 +40,12 @@
 #import <Foundation/Foundation.h>
 #import <AppKit/NSSound.h>
 
-enum AudioSessionProperties {
+/* Modern macOS SDK (AudioToolbox) now defines these AudioSession constants;
+   local redefinition removed to avoid "redefinition of enumerator" errors on Xcode 26. */
+/* enum AudioSessionProperties {
 	kAudioSessionProperty_OtherAudioIsPlaying,
-	kAudioSessionProperty_AudioRoute	
-};
+	kAudioSessionProperty_AudioRoute
+}; */
 #ifdef __cplusplus
 extern "C" {
 #endif	

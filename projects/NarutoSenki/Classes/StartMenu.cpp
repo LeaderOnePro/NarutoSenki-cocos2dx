@@ -3249,27 +3249,19 @@ void  StartMenu::onNewsBtn(CCObject* sender){
 
 #if CC_TARGET_PLATFORM==CC_PLATFORM_WIN32
 	SimpleAudioEngine::sharedEngine()->playEffect("Audio/Menu/confirm.ogg");
-	ShellExecuteA(NULL, "open", "https://github.com/LeaderOnePro/NarutoSenki", NULL, NULL, SW_SHOWNORMAL);
+	ShellExecuteA(NULL, "open", "https://github.com/LeaderOnePro/NarutoSenki-cocos2dx", NULL, NULL, SW_SHOWNORMAL);
 #endif
 
 #if CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID
-
+	SimpleAudioEngine::sharedEngine()->playEffect("Audio/Menu/confirm.ogg");
 	JniMethodInfo minfo;
-
-	bool isHave = JniHelper::getStaticMethodInfo(minfo,"net/zakume/game/NarutoSenki","getInstance","()Lnet/zakume/game/NarutoSenki;"); 
-	jobject jobj;//存对象  
-	if (isHave) {  
-		//这里的调用getInstance，返回Test类的对象。  
-		jobj = minfo.env->CallStaticObjectMethod(minfo.classID, minfo.methodID);  
-
-		isHave = JniHelper::getMethodInfo(minfo,"net/zakume/game/NarutoSenki","openWebview","()V");  
-		if (isHave) {  
-			//调用openWebview, 参数1：Test对象   参数2：方法ID  
-			minfo.env->CallVoidMethod(jobj, minfo.methodID);  
-		}  
-	}  
-
-#endif  
+	bool isHave = JniHelper::getStaticMethodInfo(minfo,"dev/leaderone/narutosenki/AppActivity","openUrl","(Ljava/lang/String;)V");
+	if (isHave) {
+		jstring jUrl = minfo.env->NewStringUTF("https://github.com/LeaderOnePro/NarutoSenki-cocos2dx");
+		minfo.env->CallStaticVoidMethod(minfo.classID, minfo.methodID, jUrl);
+		minfo.env->DeleteLocalRef(jUrl);
+	}
+#endif
 }
 
 void StartMenu::onHardCoreOn(CCObject* sender){
@@ -3405,7 +3397,7 @@ void StartMenu::onTrainingCallBack(){
 	// Both NetworkLayer::init and SelectLayer::init load their own atlases
 	// (Record/UI/Report/Ougis/Map/Gears); only Select.plist (loaded above) must
 	// come from the caller. Old hard-coded Tsunade logic below stays unreachable.
-	{
+	if(Cheats<=10){ // 4v4 (Cheats>10): skip bond mode, fall through to original 8-hero builder below
 		CCScene* selectScene = CCScene::create();
 		NetworkLayer* selectLayer = NetworkLayer::create();
 		selectScene->addChild(selectLayer);
@@ -3416,7 +3408,7 @@ void StartMenu::onTrainingCallBack(){
 
 	int i=1;
 
-	if(adResult!=1){
+	if(adResult!=1 && Cheats<=10){ // keep Cheats>10 intact for 4v4
 	Cheats=0;
 	}
 	
@@ -3888,8 +3880,10 @@ void StartMenu::keyBackClicked(){
 
 void StartMenu::onExitCallBack(){
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-	this->keyBackClicked();
+	CCDirector::sharedDirector()->end(); // Android: quit directly
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	CCDirector::sharedDirector()->end(); // PC: quit the game (Android keeps the exit dialog)
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+	exit(0); // macOS: quit the app
 #endif
 }

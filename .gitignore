@@ -44,6 +44,10 @@ gen/
 assets/
 local.properties
 
+# Gradle 构建缓存与产物(2026-06-22:proj.android 用现代 Gradle 打包)
+.gradle/
+**/build/outputs/
+
 # Ignore specific winrt files
 cocos2dx/platform/third_party/winrt/freetype/src
 cocos2dx/platform/third_party/winrt/libpng/lpng142
@@ -160,3 +164,8 @@ projects/NarutoSenki - 副本/
 # 游戏资源的冗余拷贝:实际运行用的是 projects/NarutoSenki/Resources,
 # proj.win32/Resources 是重复副本,不跟踪
 projects/NarutoSenki/proj.win32/Resources/
+
+# Coding Agent 工具生成的配置文件(2026-06-24)
+.claude/
+.codex/
+.entire/

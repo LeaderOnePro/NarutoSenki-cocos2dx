@@ -288,12 +288,6 @@ void SelectLayer::onError(CCObject* sender){
 
 void SelectLayer::onSkillMenu(CCObject* sender){
 
-	if(strcmp(_selectHero,"Pain")==0 || strcmp(_selectHero,"Orochimaru")==0){
-		CCTips *tip=CCTips::create("LimitedChar");
-		this->addChild(tip,5000);
-		return;
-	}
-
 	CCScene* pscene =CCScene::create();
 	SkillLayer* skillLayer=SkillLayer::create();
 	skillLayer->setDelegate(this);
@@ -311,12 +305,6 @@ void SelectLayer::onGameStart(CCObject* sender){
 	
 
 	if (!isStart){
-
-		if(strcmp(_selectHero,"Pain")==0 || strcmp(_selectHero,"Orochimaru")==0){
-			CCTips *tip=CCTips::create("LimitedChar");
-			this->addChild(tip,5000);
-			return;
-		}
 
 		KTools* tool= KTools::create();
 
