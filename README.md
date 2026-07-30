@@ -1,6 +1,6 @@
 # NarutoSenki-cocos2dx
 
-这是一个火影战记的 C++ 移植与现代化重构版本。基于 **Cocos2d-x 2.2.6** 框架构建，针对 Windows 平台及现代开发环境（VS2026）进行了全面适配与体验优化，并已成功移植到 **Android** 平台。
+这是一个火影战记的 C++ 移植与现代化重构版本。基于 **Cocos2d-x 2.2.6** 框架构建，已支持 **Windows、Android 与 macOS**：Windows 使用 VS2026（v145），Android 使用 NDK r10e + Gradle 8.7，macOS 使用 Xcode 26 下的 x86_64 / Rosetta 2 构建。
 
 ---
 
@@ -93,9 +93,39 @@ adb shell "ls -t /data/tombstones/tombstone_* | head -1 | xargs cat"
 
 | 问题 | 说明 | 状态 |
 |---|---|---|
-| 野指针崩溃 | `setClone` 中 `Hero::create()` 返回的 autorelease 对象可能在回调链中被提前释放 | 🔴 未彻底解决 |
-| 奥义 2 闪退 | 长门/佩恩奥义 2 或奥义 1 频繁使用时偶发崩溃 | 🔴 同上 |
+| 战斗/奥义/结算连锁崩溃 | 原因是旧版防盗版校验在包名不匹配时清空 `_CharacterArray`；已移除破坏性分支，并在一加 13 完整对局验证 | ✅ 已修复 |
 | 32 位 only | 目前仅支持 `armeabi-v7a`(32 位),纯 64 位机型可能无法安装 | 🟡 已知限制 |
+
+---
+
+## 🍎 macOS 构建与运行
+
+### 1. 环境与限制
+
+- 已在 Apple Silicon Mac + Xcode 26 实机验证。
+- 工程暂时固定为 **x86_64**，因为 cocos2d-x 2.2.6 附带的 macOS 第三方库没有 arm64 架构；Apple Silicon 会自动通过 Rosetta 2 运行。
+- 部署目标为 macOS 10.13。若系统尚未安装 Rosetta 2，可执行 `softwareupdate --install-rosetta`。
+
+### 2. 用 Xcode 构建
+
+1. 打开 `projects/NarutoSenki/proj.mac/NarutoSenki.xcodeproj`。
+2. 选择 `NarutoSenki` scheme，按 `⌘R` 构建并运行。
+
+资源会作为 App bundle 的 `Contents/Resources` 一部分打包，无需额外设置工作目录。
+
+### 3. 直接启动
+
+双击 `projects/NarutoSenki/启动游戏.command`。若还没有 Debug 构建产物，脚本会自动运行一次 `xcodebuild`；之后直接启动已生成的 App。
+
+也可在终端构建：
+
+```bash
+cd projects/NarutoSenki/proj.mac
+xcodebuild -project NarutoSenki.xcodeproj -scheme NarutoSenki \
+  -configuration Debug CODE_SIGNING_ALLOWED=NO build
+```
+
+macOS 版已验证：菜单与战斗可进入、文字正常、窗口为 960×640、Esc 可从子界面返回、Exit 可退出。4v4 彩蛋也已恢复为原始的 8 人分队逻辑；普通局继续使用羁绊模式。
 
 ---
 
@@ -136,6 +166,7 @@ adb shell "ls -t /data/tombstones/tombstone_* | head -1 | xargs cat"
 - **PC 键位与返回键**: 移除了仅限 Android 平台的按键保护守卫，现在 PC 上按 `ESC` 或 `F1` 键可正常触发菜单返回。
 - **分辨率与窗口放大**: 将 Win32 窗口分辨率由原来的 480x320 放大到 **2x (960x640)**，并新增了 PC 专属的 **Exit (退出)** 按钮。
 - **健壮性修复**: 修复了游戏内缺失精灵帧（Sprite Frame）时的崩溃问题，匹配安卓 Release 版的容错表现。
+- **跨平台战斗修复**: 修复了普通子弹/特效结束后最后一帧残留；4v4 彩蛋恢复为原始 8 人建队，避免羁绊模式的 6 人队伍污染出生点与胜负判定。
 
 ---
 
