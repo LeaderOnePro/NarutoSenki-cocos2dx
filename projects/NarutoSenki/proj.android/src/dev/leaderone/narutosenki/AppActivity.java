@@ -1,6 +1,7 @@
 package dev.leaderone.narutosenki;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
+import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -10,6 +11,21 @@ public class AppActivity extends Cocos2dxActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    /**
+     * Request an EGL config with a stencil buffer.
+     * CCClippingNode (notice marquee, skill describe scroll, ranking list mask, etc.)
+     * needs stencil bits; the default GLSurfaceView config has stencil=0, so all
+     * clippers draw unclipped children and UI text/rows overflow their panels.
+     * Matches official cocos2d-x Android samples (TestCpp / HelloCpp).
+     */
+    @Override
+    public Cocos2dxGLSurfaceView onCreateView() {
+        Cocos2dxGLSurfaceView glSurfaceView = new Cocos2dxGLSurfaceView(this);
+        // r,g,b,a, depth, stencil — last arg must be >0 for CCClippingNode
+        glSurfaceView.setEGLConfigChooser(8, 8, 8, 8, 16, 8);
+        return glSurfaceView;
     }
 
     // Open an external URL in the system browser. Called from C++ via JNI.
