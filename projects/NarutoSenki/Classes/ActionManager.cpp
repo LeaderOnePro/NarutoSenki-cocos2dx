@@ -5809,7 +5809,7 @@ void ActionManager::setClone(CCNode* sender,void* date){
 	callValue->setObject(CCString::create("smk"), 1);
 	clone->setSkillEffect(clone,callValue);
 	clone->idle();
-	_delegate->_CharacterArray->addObject(clone);
+	if(_delegate && _delegate->_CharacterArray){ _delegate->_CharacterArray->addObject(clone); }
 	_delegate->addChild(clone,-clone->getPositionY());
 	clone->doAI();
 	

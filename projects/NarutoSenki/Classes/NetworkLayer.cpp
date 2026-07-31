@@ -77,7 +77,7 @@ bool NetworkLayer::init(){
 
 
 			if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID){
-				if(tool->checkMD5()==0){
+				if(false && tool->checkMD5()==0){ /* anti-tamper kill-gate disabled (personal port) */
 					SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
 					CCDirector::sharedDirector()->end();
 					return false;

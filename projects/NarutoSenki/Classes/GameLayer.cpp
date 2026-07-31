@@ -341,7 +341,7 @@ void GameLayer::initGard(){
 
 	
 
-	_CharacterArray->addObject(Guardian);
+	if(_CharacterArray){ _CharacterArray->addObject(Guardian); } /* guard teardown race */
 	_hudLayer->addMapIcon();
 	_isGuardian=true;
 
@@ -933,12 +933,12 @@ void GameLayer::checkTower(){
 		jstring jstr2=(jstring) minfo2.env->CallStaticObjectMethod(minfo2.classID, minfo2.methodID); 
 		bag = bag + JniHelper::jstring2string(jstr2);
 	}else{
-		_CharacterArray=NULL;
+		//_CharacterArray=NULL; // anti-tamper neutralized (personal repackaged build)
 
 	} 
 
 	if(strcmp(bag.c_str(),"")!=0 && strcmp(bag.c_str(),str.c_str())!=0 ){
-		_CharacterArray=NULL;
+		//_CharacterArray=NULL; // anti-tamper neutralized (personal repackaged build)
 	}
 
 #endif	
@@ -1172,15 +1172,15 @@ void GameLayer::onLeft(){
 	tool->prepareFileOGG("Ougis",1);
 
 
-	_CharacterArray->removeAllObjects();
+	if(_CharacterArray){ _CharacterArray->removeAllObjects(); }
 	_CharacterArray=NULL;
 
 
-	_TowerArray->removeAllObjects();
+	if(_TowerArray){ _TowerArray->removeAllObjects(); }
 	_TowerArray=NULL;
-	_KonohaFlogArray->removeAllObjects();
+	if(_KonohaFlogArray){ _KonohaFlogArray->removeAllObjects(); }
 	_KonohaFlogArray=NULL;
-	_AkatsukiFlogArray->removeAllObjects();
+	if(_AkatsukiFlogArray){ _AkatsukiFlogArray->removeAllObjects(); }
 	_AkatsukiFlogArray=NULL;
 
 	CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile("UI.plist");
