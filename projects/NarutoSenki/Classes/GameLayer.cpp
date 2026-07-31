@@ -1172,15 +1172,15 @@ void GameLayer::onLeft(){
 	tool->prepareFileOGG("Ougis",1);
 
 
-	_CharacterArray->removeAllObjects();
+	if(_CharacterArray){ _CharacterArray->removeAllObjects(); }
 	_CharacterArray=NULL;
 
 
-	_TowerArray->removeAllObjects();
+	if(_TowerArray){ _TowerArray->removeAllObjects(); }
 	_TowerArray=NULL;
-	_KonohaFlogArray->removeAllObjects();
+	if(_KonohaFlogArray){ _KonohaFlogArray->removeAllObjects(); }
 	_KonohaFlogArray=NULL;
-	_AkatsukiFlogArray->removeAllObjects();
+	if(_AkatsukiFlogArray){ _AkatsukiFlogArray->removeAllObjects(); }
 	_AkatsukiFlogArray=NULL;
 
 	CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFramesFromFile("UI.plist");
