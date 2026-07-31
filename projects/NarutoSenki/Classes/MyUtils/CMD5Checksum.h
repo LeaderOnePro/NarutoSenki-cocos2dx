@@ -12,10 +12,10 @@
       
       
      *****************************************************************************************/  
-    typedef unsigned long DWORD;  
+    typedef unsigned int DWORD;  
     typedef unsigned char BYTE;  
-    typedef unsigned long ULONG;  
-    typedef unsigned long ULONG;  
+    typedef unsigned int ULONG;  
+    typedef unsigned int ULONG;  
     typedef unsigned int UINT;  
     typedef unsigned char UCHAR;  
       

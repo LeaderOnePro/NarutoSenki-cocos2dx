@@ -32,6 +32,7 @@ THE SOFTWARE.
 #import "CCEGLView.h"
 #import <OpenGL/gl.h>
 #import "CCDirector.h"
+#import "CCKeypadDispatcher.h"
 #import "ccConfig.h"
 #import "CCSet.h"
 #import "CCTouch.h"
@@ -448,7 +449,13 @@ static EAGLView *view;
 - (void)keyDown:(NSEvent *)theEvent
 {
 	DISPATCH_EVENT(theEvent, _cmd);
-	
+
+	// Map Esc to Android-style "back" so CCKeypadDelegate::keyBackClicked() fires on macOS
+	// (CreditsLayer and other screens rely on it to return to the previous scene).
+	if ([theEvent keyCode] == 53) { // 53 = Esc
+		cocos2d::CCDirector::sharedDirector()->getKeypadDispatcher()->dispatchKeypadMSG(cocos2d::kTypeBackClicked);
+	}
+
 	// pass the event along to the next responder (like your NSWindow subclass)
 	[super keyDown:theEvent];
 }

@@ -451,26 +451,40 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 		
 		NSRect textRect = NSMakeRect(xPadding, POTHigh - dimensions.height + yPadding, realDimensions.width, realDimensions.height);
 		//Disable antialias
-		
-		[[NSGraphicsContext currentContext] setShouldAntialias:NO];	
-		
-		NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(POTWide, POTHigh)];
-        
-		[image lockFocus];
-        
-        // patch for mac retina display and lableTTF
-        [[NSAffineTransform transform] set];
-		
-		//[stringWithAttributes drawAtPoint:NSMakePoint(xPadding, offsetY)]; // draw at offset position	
+
+		// Render into an explicitly-formatted RGBA8888 bitmap that WE control, instead of
+		// [image lockFocus] + initWithFocusedViewRect. On a Retina display lockFocus produces a
+		// 2x-scaled bitmap in an unpredictable pixel format, but the code below copies exactly
+		// POTWide*POTHigh*4 bytes assuming a straight 1x RGBA8888 layout -> wrong stride/size ->
+		// garbage RGB channels ("purple mush"). An explicit NSBitmapImageRep is always 1x and
+		// straight premultiplied RGBA (alpha last), matching the GL upload.
+		NSBitmapImageRep *offscreenRep = [[NSBitmapImageRep alloc]
+			initWithBitmapDataPlanes:NULL
+			pixelsWide:POTWide
+			pixelsHigh:POTHigh
+			bitsPerSample:8
+			samplesPerPixel:4
+			hasAlpha:YES
+			isPlanar:NO
+			colorSpaceName:NSDeviceRGBColorSpace
+			bitmapFormat:0
+			bytesPerRow:4 * POTWide
+			bitsPerPixel:32];
+		// zero the buffer so transparent/partial-coverage pixels have RGB=0 (no leftover garbage)
+		memset([offscreenRep bitmapData], 0, POTWide * POTHigh * 4);
+
+		NSGraphicsContext *nsContext = [NSGraphicsContext graphicsContextWithBitmapImageRep:offscreenRep];
+		[NSGraphicsContext saveGraphicsState];
+		[NSGraphicsContext setCurrentContext:nsContext];
+		[nsContext setShouldAntialias:NO];
 		[stringWithAttributes drawInRect:textRect];
-		//[stringWithAttributes drawInRect:textRect withAttributes:tokenAttributesDict];
-		NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTWide, POTHigh)];
-		[image unlockFocus];
-		
-		data = (unsigned char*) [bitmap bitmapData];  //Use the same buffer to improve the performance.
-		
+		[nsContext flushGraphics];
+		[NSGraphicsContext restoreGraphicsState];
+
+		data = (unsigned char*) [offscreenRep bitmapData];
+
 		NSUInteger textureSize = POTWide*POTHigh*4;
-		
+
 		unsigned char* dataNew = new unsigned char[textureSize];
 		if (dataNew) {
 			memcpy(dataNew, data, textureSize);
@@ -483,8 +497,7 @@ static bool _initWithString(const char * pText, cocos2d::CCImage::ETextAlign eAl
 			pInfo->bitsPerComponent = 8;
 			bRet = true;
 		}
-		[bitmap release];
-		[image release];
+		[offscreenRep release];
 	} while (0);
     return bRet;
 }

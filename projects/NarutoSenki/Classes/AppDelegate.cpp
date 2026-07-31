@@ -22,6 +22,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
     CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
 	
     pDirector->setOpenGLView(pEGLView);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+	// Mac: game assets ship as a folder reference (Contents/Resources/Resources/), add search path
+	CCFileUtils::sharedFileUtils()->addSearchPath("Resources");
+#endif
 	pEGLView->setDesignResolutionSize(480,320,kResolutionFixedHeight);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	pEGLView->setFrameZoomFactor(2.0f); // enlarge win32 window to 960x640 (2x); game logic stays at 480x320 design res
