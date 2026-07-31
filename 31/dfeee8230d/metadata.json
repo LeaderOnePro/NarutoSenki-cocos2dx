@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "31dfeee8230d",
+  "strategy": "manual-commit",
+  "branch": "feat/android-revive-pain-orochimaru",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "projects/NarutoSenki/Classes/GameLayer.cpp"
+  ],
+  "sessions": [
+    {
+      "metadata": "/31/dfeee8230d/0/metadata.json",
+      "transcript": "/31/dfeee8230d/0/full.jsonl",
+      "compact_transcript": "/31/dfeee8230d/0/transcript.jsonl",
+      "content_hash": "/31/dfeee8230d/0/content_hash.txt",
+      "prompt": "/31/dfeee8230d/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 6041,
+    "cache_creation_tokens": 31825818,
+    "cache_read_tokens": 64429712,
+    "output_tokens": 596146,
+    "api_call_count": 420
+  }
+}
